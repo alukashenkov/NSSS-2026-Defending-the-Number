@@ -1,0 +1,14 @@
+# Python dependencies for the scanner-comparison tooling
+# (compare_scanners.py, query_osv_purl.py) at the repo root.
+#
+# NOT the target application's dependencies — those live in
+# insecure-app/requirements.txt and are pinned to vulnerable versions on
+# purpose. Do not merge the two files.
+#
+# Install:  python3 -m pip install -r requirements.txt
+#
+# Grype, Trivy and Syft are separate binaries, not Python packages;
+# see README.md for those.
+
+requests>=2.32
+python-dotenv>=1.0
