@@ -1,7 +1,7 @@
 {
   "meta": {
     "tool": "query_osv_purl",
-    "sbomFile": "/Users/la/Desktop/Programing/NSSS Talk/sboms/insecureapp-20.04.trivy.cdx.json",
+    "sbomFile": "insecureapp-20.04.trivy.cdx.json",
     "created": "2026-10-16T12:39:43",
     "totalPackages": 540,
     "affectedPackages": 69,

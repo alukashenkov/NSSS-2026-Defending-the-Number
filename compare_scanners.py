@@ -484,12 +484,15 @@ def refresh_grype(sbom: Path, out_path: Path) -> None:
 
 
 def refresh_trivy(sbom: Path, out_path: Path) -> None:
-    tmp_path = out_path.with_name(out_path.name + ".tmp")
+    tmp_path = out_path.with_name(out_path.name + ".tmp").resolve()
     try:
+        # Run from the SBOM's directory so Trivy records the bare file name as
+        # ArtifactName/Target, not an absolute path from whoever ran the scan.
         subprocess.run(
-            ["trivy", "sbom", str(sbom), "--format", "json", "--output", str(tmp_path)],
+            ["trivy", "sbom", sbom.name, "--format", "json", "--output", str(tmp_path)],
             check=True,
             stdout=subprocess.DEVNULL,
+            cwd=sbom.parent,
         )
         tmp_path.replace(out_path)
     finally:

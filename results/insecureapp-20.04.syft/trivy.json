@@ -5,7 +5,7 @@
   },
   "ReportID": "01a1444b-8558-78dd-8bc0-b12efca728c2",
   "CreatedAt": "2026-10-16T12:39:22.456583+02:00",
-  "ArtifactName": "/Users/la/Desktop/Programing/NSSS Talk/sboms/insecureapp-20.04.syft.cdx.json",
+  "ArtifactName": "insecureapp-20.04.syft.cdx.json",
   "ArtifactType": "cyclonedx",
   "Metadata": {
     "OS": {
@@ -16,7 +16,7 @@
   },
   "Results": [
     {
-      "Target": "/Users/la/Desktop/Programing/NSSS Talk/sboms/insecureapp-20.04.syft.cdx.json (ubuntu 20.04)",
+      "Target": "insecureapp-20.04.syft.cdx.json (ubuntu 20.04)",
       "Class": "os-pkgs",
       "Type": "ubuntu",
       "Packages": [

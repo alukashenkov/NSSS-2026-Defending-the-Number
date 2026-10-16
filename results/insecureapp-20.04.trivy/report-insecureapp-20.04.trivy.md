@@ -3,7 +3,7 @@
 - **Image:** `insecureapp-20.04:latest`
 - **Digest:** `sha256:3893236509066ada26fdab52594be25cd0a487c02832119fdf1a6738c09c58bd`
 - **SBOM:** `insecureapp-20.04.trivy.cdx.json` — CycloneDX 1.7, trivy 0.76.0, built 2026-10-16T10:38:24+00:00
-- **Report generated:** 2026-10-16T12:40:38
+- **Report generated:** 2026-10-16T12:55:49
 - **Scanners:** OSV (api.osv.dev) · Grype (grype 0.120.1) · Trivy (trivy 0.76.0) · Vulners (vulners.com audit API v4)
 
 ## Summary

@@ -309,7 +309,7 @@ def scan(
     document: dict = {
         "meta": {
             "tool": "query_osv_purl",
-            "sbomFile": str(sbom_path),
+            "sbomFile": sbom_path.name,
             "created": dt.datetime.now().isoformat(timespec="seconds"),
             "totalPackages": len(purls),
             "affectedPackages": affected,

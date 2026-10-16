@@ -1,7 +1,7 @@
 {
   "meta": {
     "tool": "query_osv_purl",
-    "sbomFile": "/Users/la/Desktop/Programing/NSSS Talk/sboms/insecureapp-20.04.syft.cdx.json",
+    "sbomFile": "insecureapp-20.04.syft.cdx.json",
     "created": "2026-10-16T12:39:37",
     "totalPackages": 541,
     "affectedPackages": 71,

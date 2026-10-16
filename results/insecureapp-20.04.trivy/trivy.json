@@ -5,7 +5,7 @@
   },
   "ReportID": "01a1444b-ca6b-7a35-91de-fec8ac490fff",
   "CreatedAt": "2026-10-16T12:39:40.139671+02:00",
-  "ArtifactName": "/Users/la/Desktop/Programing/NSSS Talk/sboms/insecureapp-20.04.trivy.cdx.json",
+  "ArtifactName": "insecureapp-20.04.trivy.cdx.json",
   "ArtifactType": "cyclonedx",
   "Metadata": {
     "OS": {
@@ -39,7 +39,7 @@
   },
   "Results": [
     {
-      "Target": "/Users/la/Desktop/Programing/NSSS Talk/sboms/insecureapp-20.04.trivy.cdx.json (ubuntu 20.04)",
+      "Target": "insecureapp-20.04.trivy.cdx.json (ubuntu 20.04)",
       "Class": "os-pkgs",
       "Type": "ubuntu",
       "Packages": [
