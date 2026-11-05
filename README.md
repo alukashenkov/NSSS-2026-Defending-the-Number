@@ -484,3 +484,7 @@ python3 -m unittest test_query_osv_purl
 - `tutorial.db` is never created. The startup `SELECT` in `app.py` is wrapped in a
   bare `except: pass` and always fails silently — the query exists to be flagged by
   static analysis, not to work.
+
+## License
+
+[MIT](LICENSE).
