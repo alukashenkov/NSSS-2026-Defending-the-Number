@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-compare_scanners.py — run four vulnerability scanners against a CycloneDX SBOM
+compare_scanners.py — run five vulnerability scanners against a CycloneDX SBOM
 and print their findings side by side.
 
-Scanners: OSV, Grype, Trivy, Vulners.
+Scanners: OSV, Src OSV (OSV queried by deb source package), Grype, Trivy, Vulners.
 
 Every SBOM gets its own artifact directory under results/, holding each
 scanner's raw output plus the rendered report:
 
-    results/<sbom-name>/{osv,grype,trivy,vulners}.json
+    results/<sbom-name>/{osv,osv-src,grype,trivy,vulners}.json
     results/<sbom-name>/report-<sbom-name>.md
 
 Vulnerability data is refreshed daily: any artifact not written today is
@@ -31,9 +31,11 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
+import time
 import urllib.parse
-from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor  # pylint: disable=no-name-in-module
+from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed  # pylint: disable=no-name-in-module
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
@@ -73,7 +75,80 @@ def col(text, colour):
 
 def note(message, colour=DIM):
     """Progress output — goes to stderr so it stays out of the report file."""
-    print(col(message, colour), file=sys.stderr)
+    with StatusLine.lock:
+        StatusLine.erase()
+        print(col(message, colour), file=sys.stderr, flush=True)
+
+
+class StatusLine:
+    """
+    One self-redrawing line on stderr while slow work runs: a spinner, what
+    each job is doing ("OSV details 340/912", "Grype running") and the time
+    elapsed. note() prints above it, so completions appear as they happen.
+    Draws nothing when stderr is not a terminal (piped or redirected runs).
+    """
+
+    lock = threading.Lock()
+    _shown = False  # whether a status line is on screen right now
+    FRAMES = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
+
+    def __init__(self, title: str):
+        self.title = title
+        self.jobs: dict[str, str] = {}
+        self.enabled = sys.stderr.isatty()
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._spin, daemon=True)
+        self._started = time.monotonic()
+
+    @classmethod
+    def erase(cls) -> None:
+        if cls._shown:
+            sys.stderr.write("\r\033[K")
+            cls._shown = False
+
+    def set(self, job: str, state: str) -> None:
+        self.jobs[job] = state
+
+    def done(self, job: str) -> None:
+        self.jobs.pop(job, None)
+
+    def progress_for(self, job: str):
+        """A callback that reports a job's sub-steps onto this line."""
+        return lambda text: self.set(job, text)
+
+    def _spin(self) -> None:
+        frame = 0
+        while not self._stop.wait(0.1):
+            elapsed = int(time.monotonic() - self._started)
+            jobs = " · ".join(
+                f"{name} {state}".strip() for name, state in list(self.jobs.items())
+            )
+            line = (
+                f"{self.FRAMES[frame % len(self.FRAMES)]} {self.title}"
+                f"{': ' + jobs if jobs else ''}  {elapsed // 60}m{elapsed % 60:02d}s"
+            )
+            width = shutil.get_terminal_size((100, 20)).columns - 1
+            if len(line) > width:
+                line = line[: width - 1] + "…"
+            with StatusLine.lock:
+                sys.stderr.write("\r\033[K" + col(line, YELLOW))
+                sys.stderr.flush()
+                StatusLine._shown = True
+            frame += 1
+
+    def __enter__(self):
+        if self.enabled:
+            self._thread.start()
+        return self
+
+    def __exit__(self, *exc):
+        self._stop.set()
+        if self.enabled:
+            self._thread.join()
+        with StatusLine.lock:
+            StatusLine.erase()
+            sys.stderr.flush()
+        return False
 
 
 # ── PURL helpers ──────────────────────────────────────────────────────────
@@ -269,7 +344,9 @@ def load_osv(path: Path) -> ScanResult:
     """Output of query_osv_purl.py: {"packages": [{purl, vulnerabilities: [...]}]}."""
     data = json.loads(path.read_text())
 
-    result = ScanResult(available=True, tool="api.osv.dev")
+    mode = data.get("meta", {}).get("mode", "binary")
+    tool = "api.osv.dev" + (", by source package" if mode == "source" else "")
+    result = ScanResult(available=True, tool=tool)
     for pkg in data.get("packages", []):
         purl = normalise_purl(pkg["purl"])
         result.packages[purl] = {
@@ -465,32 +542,45 @@ def load_vulners(path: Path) -> ScanResult:  # pylint: disable=too-many-locals
 # mistakes for a good one.
 
 
-def refresh_osv(sbom: Path, out_path: Path) -> None:
-    query_osv_purl.scan(sbom, out_path, quiet=True)
+def refresh_osv(sbom: Path, out_path: Path, progress=None) -> None:
+    query_osv_purl.scan(sbom, out_path, quiet=True, progress=progress)
 
 
-def refresh_grype(sbom: Path, out_path: Path) -> None:
+def refresh_osv_source(sbom: Path, out_path: Path, progress=None) -> None:
+    query_osv_purl.scan(sbom, out_path, quiet=True, mode="source", progress=progress)
+
+
+def run_quietly(cmd: list[str], **kwargs) -> None:
+    """
+    Run a scanner CLI with its stderr captured. Grype and Trivy draw their own
+    progress bars and logs there, which garble each other (and the status line)
+    when they run side by side. On failure the tail of that output is the error.
+    """
+    proc = subprocess.run(cmd, stderr=subprocess.PIPE, text=True, check=False, **kwargs)
+    if proc.returncode:
+        tail = " | ".join(proc.stderr.strip().splitlines()[-3:])
+        raise RuntimeError(f"{cmd[0]} exited {proc.returncode}: {tail}")
+
+
+def refresh_grype(sbom: Path, out_path: Path, progress=None) -> None:  # pylint: disable=unused-argument
     tmp_path = out_path.with_name(out_path.name + ".tmp")
     try:
         with tmp_path.open("w") as f:
-            subprocess.run(
-                ["grype", f"sbom:{sbom}", "-o", "cyclonedx-json", "--by-cve"],
-                stdout=f,
-                check=True,
+            run_quietly(
+                ["grype", f"sbom:{sbom}", "-o", "cyclonedx-json", "--by-cve"], stdout=f
             )
         tmp_path.replace(out_path)
     finally:
         tmp_path.unlink(missing_ok=True)
 
 
-def refresh_trivy(sbom: Path, out_path: Path) -> None:
+def refresh_trivy(sbom: Path, out_path: Path, progress=None) -> None:  # pylint: disable=unused-argument
     tmp_path = out_path.with_name(out_path.name + ".tmp").resolve()
     try:
         # Run from the SBOM's directory so Trivy records the bare file name as
         # ArtifactName/Target, not an absolute path from whoever ran the scan.
-        subprocess.run(
+        run_quietly(
             ["trivy", "sbom", sbom.name, "--format", "json", "--output", str(tmp_path)],
-            check=True,
             stdout=subprocess.DEVNULL,
             cwd=sbom.parent,
         )
@@ -499,7 +589,7 @@ def refresh_trivy(sbom: Path, out_path: Path) -> None:
         tmp_path.unlink(missing_ok=True)
 
 
-def refresh_vulners(sbom: Path, out_path: Path) -> None:
+def refresh_vulners(sbom: Path, out_path: Path, progress=None) -> None:  # pylint: disable=unused-argument
     """POST the SBOM to the Vulners audit API and normalise the response."""
     load_dotenv()
     api_key = os.getenv("VULNERS_API_KEY")
@@ -513,8 +603,19 @@ def refresh_vulners(sbom: Path, out_path: Path) -> None:
             files={"file": (sbom.name, f, "application/json")},
             timeout=VULNERS_TIMEOUT,
         )
-    resp.raise_for_status()
-    raw = resp.json()
+    if not resp.ok:
+        # The body usually says why (bad key, quota, oversized upload); a bare
+        # "502 Server Error" does not.
+        body = " ".join(resp.text.split())[:300]
+        raise RuntimeError(
+            f"HTTP {resp.status_code} {resp.reason} after "
+            f"{resp.elapsed.total_seconds():.0f}s: {body or '(empty body)'}"
+        )
+    try:
+        raw = resp.json()
+    except ValueError as exc:
+        body = " ".join(resp.text.split())[:300]
+        raise RuntimeError(f"HTTP {resp.status_code}, body is not JSON: {body}") from exc
 
     # The API has been seen returning both a flat list and {data: [...]}.
     section = raw.get("data", raw.get("result", {}))
@@ -558,7 +659,8 @@ class Scanner:
     key: str  # artifact filename stem
     label: str  # column heading
     letter: str  # single-char marker in the detail view
-    refresh: Callable[[Path, Path], None]
+    # (sbom, out_path, progress) — progress takes a short status string or is None.
+    refresh: Callable[[Path, Path, Callable[[str], None] | None], None]
     load: Callable[[Path], ScanResult]
     keyed_by_purl: bool = True
     requires: str | None = None  # executable that must be on PATH
@@ -566,6 +668,8 @@ class Scanner:
 
 SCANNERS = (
     Scanner("osv", "OSV", "O", refresh_osv, load_osv),
+    # Same API, deb packages looked up by source package; loads like OSV.
+    Scanner("osv-src", "Src OSV", "S", refresh_osv_source, load_osv),
     Scanner("grype", "Grype", "G", refresh_grype, load_grype, requires="grype"),
     Scanner("trivy", "Trivy", "T", refresh_trivy, load_trivy, requires="trivy"),
     Scanner(
@@ -609,19 +713,26 @@ def load_cve_enrichment(artifact_dir: Path, cve_ids: set[str], mode: str) -> dic
 
     note(f"   Enriching {len(todo)} CVEs with Vulners CVSS/EPSS/KEV ...", YELLOW)
     try:
-        cached.update(query_osv_purl.fetch_vulners_scores(todo, quiet=True))
+        with StatusLine("Enriching") as status:
+            scores, failed = query_osv_purl.fetch_vulners_scores(
+                todo, quiet=True, progress=status.progress_for("")
+            )
     except Exception as exc:  # pylint: disable=broad-exception-caught
         note(f"   ⚠  CVE enrichment failed ({exc}) — using scanner-reported scores", YELLOW)
         return cached
+    cached.update(scores)
+    if failed:
+        note(f"   ⚠  CVE enrichment failed for {len(failed)} CVEs — retried next run", YELLOW)
 
     try:
         path.write_text(
             json.dumps(
                 {
                     "date": dt.date.today().isoformat(),
-                    # Track what was asked for, not just what came back, so CVEs
-                    # Vulners does not know are not re-requested all day.
-                    "queried": sorted(queried | set(todo)),
+                    # Track what was answered, not just what came back, so CVEs
+                    # Vulners does not know are not re-requested all day — but
+                    # CVEs from a failed batch are, on the next run.
+                    "queried": sorted(queried | (set(todo) - failed)),
                     "cves": cached,
                 },
                 indent=2,
@@ -632,17 +743,39 @@ def load_cve_enrichment(artifact_dir: Path, cve_ids: set[str], mode: str) -> dic
     return cached
 
 
+def artifact_date(path: Path) -> dt.date:
+    """When an artifact was written: the day its scanner last succeeded."""
+    return dt.date.fromtimestamp(path.stat().st_mtime)
+
+
 def is_fresh(path: Path) -> bool:
     """True if the artifact was written today — vulnerability data is refreshed daily."""
     if not path.exists():
         return False
-    return dt.date.fromtimestamp(path.stat().st_mtime) == dt.date.today()
+    return artifact_date(path) == dt.date.today()
+
+
+def clear_scan_data(artifact_dir: Path) -> None:
+    """
+    Delete everything a previous run left for one SBOM: every scanner artifact,
+    the CVE enrichment, the report and any half-written temp file. A forced
+    refresh then starts from nothing, so a scanner that fails shows as missing
+    rather than quietly reusing yesterday's answer.
+    """
+    names = [f"{s.key}.json" for s in SCANNERS] + [CVE_ENRICHMENT_FILE]
+    for path in [artifact_dir / n for n in names] + [
+        *artifact_dir.glob("report-*.md"),
+        *artifact_dir.glob("*.tmp"),
+    ]:
+        path.unlink(missing_ok=True)
 
 
 def refresh_artifacts(sbom: Path, artifact_dir: Path, mode: str) -> None:
     """Re-scan whatever is stale. The scanners are independent, so run them together."""
     if mode == "never":
         return
+    if mode == "force":
+        clear_scan_data(artifact_dir)
 
     pending = []
     for scanner in SCANNERS:
@@ -662,20 +795,38 @@ def refresh_artifacts(sbom: Path, artifact_dir: Path, mode: str) -> None:
 
     note(f"   Refreshing: {', '.join(s.label for s, _ in pending)} ...", YELLOW)
 
-    def run(job):
-        scanner, out_path = job
-        try:
-            scanner.refresh(sbom, out_path)
-            return scanner, None
-        except Exception as exc:  # one scanner failing must not sink the report  # pylint: disable=broad-exception-caught
-            return scanner, exc
+    with StatusLine("Scanning") as status:
 
-    with ThreadPoolExecutor(max_workers=len(pending)) as pool:
-        for scanner, error in pool.map(run, pending):
-            if error is None:
-                note(f"   ✅ {scanner.label} refreshed", GREEN)
-            else:
-                note(f"   ❌ {scanner.label} failed: {error}", RED)
+        def run(job):
+            scanner, out_path = job
+            started = time.monotonic()
+            status.set(scanner.label, "running")
+            try:
+                scanner.refresh(sbom, out_path, status.progress_for(scanner.label))
+                return job, None, time.monotonic() - started
+            except Exception as exc:  # one scanner failing must not sink the report  # pylint: disable=broad-exception-caught
+                return job, exc, time.monotonic() - started
+            finally:
+                status.done(scanner.label)
+
+        # Report each scanner the moment it finishes, not in submission order.
+        with ThreadPoolExecutor(max_workers=len(pending)) as pool:
+            futures = [pool.submit(run, job) for job in pending]
+            for future in as_completed(futures):
+                (scanner, out_path), error, took = future.result()
+                if error is None:
+                    note(f"   ✅ {scanner.label} refreshed ({took:.0f}s)", GREEN)
+                else:
+                    kept = (
+                        f"keeping the {artifact_date(out_path)} artifact"
+                        if out_path.exists()
+                        else "no artifact, column omitted"
+                    )
+                    note(
+                        f"   ❌ {scanner.label} failed after {took:.0f}s — "
+                        f"{type(error).__name__}: {error} ({kept})",
+                        RED,
+                    )
 
 
 # ── Canonical PURL mapping ────────────────────────────────────────────────
@@ -887,6 +1038,17 @@ def run_report(  # pylint: disable=too-many-locals,too-many-branches,too-many-st
             for s in active
         )
     )
+    # A failed refresh keeps the previous artifact, so a column can silently be
+    # days older than its neighbours. Say so wherever that is the case.
+    today = dt.date.today()
+    stale = [
+        f"{s.label} ({artifact_date(artifact_dir / f'{s.key}.json').isoformat()})"
+        for s in active
+        if artifact_date(artifact_dir / f"{s.key}.json") != today
+    ]
+    if stale:
+        print(f"- **⚠ Not scanned today:** {', '.join(stale)}")
+        note(f"   ⚠  Not scanned today: {', '.join(stale)}", YELLOW)
 
     # Collapse every spelling of a package onto one primary PURL.
     scanner_purls = set()
@@ -932,6 +1094,9 @@ def run_report(  # pylint: disable=too-many-locals,too-many-branches,too-many-st
     section_header("Summary")
     print(f"  {col('SBOM Components (Raw):', DIM):<32} {sbom_raw_count}")
     print(f"  {col('Deduplicated PURLs:', DIM):<32} {len(all_purls)}")
+    by_eco = Counter(ecosystem_from_purl(p) for p in all_purls)
+    eco_counts = [e for e in ECOSYSTEM_ORDER if e in by_eco] + sorted(set(by_eco) - set(ECOSYSTEM_ORDER))
+    print(f"  {col('  by ecosystem:', DIM):<32} {' · '.join(f'{e} {by_eco[e]}' for e in eco_counts)}")
     print(f"  {col('Clean (0 vulns):', DIM):<32} {len(all_purls) - len(vuln_purls)}")
     print(f"  {col('Vulnerable:', DIM):<32} {len(vuln_purls)}")
     print()
@@ -1041,6 +1206,14 @@ def run_report(  # pylint: disable=too-many-locals,too-many-branches,too-many-st
         "  CVSS, EPSS and KEV come from Vulners where it knows the CVE, "
         "otherwise from the scanner that reported it."
     )
+    report_cves = {vid for vid in all_vuln_ids if vid.startswith("CVE-")}
+    known = [enrichment[c] for c in report_cves if c in enrichment]
+    scored = sum(1 for e in known if e.get("cvss") is not None and e.get("epss") is not None)
+    pct = f" ({100 * scored / len(report_cves):.1f}%)" if report_cves else ""
+    print(
+        f"  Vulners CVE data: {len(known)} of {len(report_cves)} CVEs known, "
+        f"CVSS+EPSS on {scored}{pct}."
+    )
     header = " ".join(f"{col(s.letter, BOLD)}{s.label[1:]}" for s in active)
     print(f"  {header}   SEVERITY   CVSS   EPSS  KEV   {col('↳ provenance', MAGENTA)}")
 
@@ -1125,8 +1298,12 @@ def run_report(  # pylint: disable=too-many-locals,too-many-branches,too-many-st
 ANSI_RE = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
 
 
-class TeeOutput:
-    """Write to the terminal with colour and to the report file without."""
+class ReportFile:
+    """
+    Stands in for stdout while a report renders: everything goes to the report
+    file, colour stripped, and nothing to the terminal. The full comparison is
+    too long to read scrolling past; the terminal gets status lines instead.
+    """
 
     def __init__(self, file_path: Path):
         self.terminal = sys.stdout
@@ -1134,14 +1311,12 @@ class TeeOutput:
         self.buffer = ""
 
     def write(self, message):
-        self.terminal.write(message)
         self.buffer += ANSI_RE.sub("", message)
         while "\n" in self.buffer:
             line, self.buffer = self.buffer.split("\n", 1)
             self.file.write(line.rstrip() + "\n")
 
     def flush(self):
-        self.terminal.flush()
         self.file.flush()
 
     def close(self):
@@ -1171,7 +1346,7 @@ def main() -> int:
     global USE_COLOR  # pylint: disable=global-statement
 
     parser = argparse.ArgumentParser(
-        description="Compare OSV, Grype, Trivy and Vulners findings for a CycloneDX SBOM."
+        description="Compare OSV, Src OSV, Grype, Trivy and Vulners findings for a CycloneDX SBOM."
     )
     parser.add_argument(
         "sboms",
@@ -1184,7 +1359,8 @@ def main() -> int:
         choices=("auto", "force", "never"),
         default="auto",
         help="auto: rescan artifacts not written today (default); "
-        "force: rescan everything now; never: use existing artifacts only",
+        "force: delete scan data, then rescan everything (OSV record cache kept); "
+        "never: use existing artifacts only",
     )
     parser.add_argument(
         "--results-dir",
@@ -1195,7 +1371,8 @@ def main() -> int:
     parser.add_argument("--no-color", action="store_true", help="Disable ANSI colour")
     args = parser.parse_args()
 
-    USE_COLOR = not args.no_color and sys.stdout.isatty()
+    # Only status lines reach the terminal now, and they go to stderr.
+    USE_COLOR = not args.no_color and sys.stderr.isatty()
 
     sboms = args.sboms or sorted(PROJECT_ROOT.glob(DEFAULT_SBOM_GLOB))
     if not sboms:
@@ -1208,23 +1385,99 @@ def main() -> int:
             note(f"❌ SBOM file not found: {path}", RED)
         return 1
 
-    for sbom in sboms:
-        note(f"\n▸ {sbom.name}", BOLD + CYAN)
+    # The OSV record cache lives beside the artifacts it was built for.
+    query_osv_purl.CACHE_PATH = args.results_dir / query_osv_purl.CACHE_PATH.name
+    if args.refresh == "force":
+        # The OSV record cache is kept: each record is checked against OSV's
+        # modified timestamp anyway, so clearing it would only re-download
+        # thousands of unchanged records.
+        note("Forced refresh: each SBOM's scan data is deleted before it is rescanned "
+             "(OSV record cache kept; changed records are refetched).", YELLOW)
+
+    started = time.monotonic()
+    rows = []
+    for number, sbom in enumerate(sboms, 1):
+        sbom_started = time.monotonic()
+        note(f"\n[{number}/{len(sboms)}] {sbom.name}", BOLD + CYAN)
         artifact_dir = artifact_dir_for(args.results_dir, sbom)
         artifact_dir.mkdir(parents=True, exist_ok=True)
 
         refresh_artifacts(sbom, artifact_dir, args.refresh)
         report_path = artifact_dir / report_name_for(sbom)
-        tee = TeeOutput(report_path)
-        sys.stdout = tee
+        report = ReportFile(report_path)
+        sys.stdout = report
+        error = None
         try:
             run_report(sbom, artifact_dir, args.refresh, load_sbom(sbom))
+        except Exception as exc:  # one SBOM failing must not sink the others  # pylint: disable=broad-exception-caught
+            error = f"{type(exc).__name__}: {exc}"
         finally:
-            sys.stdout = tee.terminal
-            tee.close()
-        note(f"✅ Report saved to {report_path}", GREEN)
+            sys.stdout = report.terminal
+            report.close()
+        took = time.monotonic() - sbom_started
+        if error:
+            report_path.unlink(missing_ok=True)
+            note(f"   ❌ Report failed — {error}", RED)
+        else:
+            shown = (
+                report_path.relative_to(Path.cwd())
+                if report_path.is_relative_to(Path.cwd())
+                else report_path
+            )
+            note(f"   📄 Report → {shown}  ({fmt_duration(took)})", GREEN)
+        rows.append((sbom, artifact_dir, error))
 
-    return 0
+    return print_summary(rows, time.monotonic() - started)
+
+
+def fmt_duration(seconds: float) -> str:
+    seconds = int(seconds)
+    return f"{seconds // 60}m{seconds % 60:02d}s" if seconds >= 60 else f"{seconds}s"
+
+
+def print_summary(rows: list, elapsed: float) -> int:
+    """
+    One line per SBOM: is each column from today's scan, and did the report
+    render. A comparison is complete only when every column is current; a
+    column kept from an earlier day or missing outright is called out, since
+    the report would otherwise compare it against fresh data without saying so.
+    Returns the exit code: 0 when every comparison is complete.
+    """
+    today = dt.date.today()
+    name_width = max(len(artifact_dir.name) for _, artifact_dir, _ in rows)
+    widths = [max(len(s.label), 7) for s in SCANNERS]
+
+    note("\nComparison status", BOLD)
+    note("  " + "SBOM".ljust(name_width) + "  "
+         + "  ".join(s.label.ljust(w) for s, w in zip(SCANNERS, widths)) + "  Report", BOLD)
+    complete = 0
+    for _sbom, artifact_dir, error in rows:
+        cells, current = [], True
+        for scanner, width in zip(SCANNERS, widths):
+            path = artifact_dir / f"{scanner.key}.json"
+            if not path.exists():
+                cell, colour, current = "❌ none", RED, False
+            elif artifact_date(path) != today:
+                cell, colour, current = f"⚠ {artifact_date(path):%m-%d}", YELLOW, False
+            else:
+                cell, colour = "✅", GREEN
+            # Emoji are two columns wide; pad on the visible width.
+            pad = width - len(cell) - (1 if cell.startswith(("✅", "❌")) else 0)
+            cells.append(col(cell, colour) + " " * max(pad, 0))
+        report_cell = col("❌ failed", RED) if error else col("✅", GREEN)
+        complete += bool(current and not error)
+        note("  " + artifact_dir.name.ljust(name_width) + "  " + "  ".join(cells)
+             + "  " + report_cell, RESET)
+
+    total = len(rows)
+    if complete == total:
+        note(f"\n✅ All {total} comparisons complete and current ({fmt_duration(elapsed)})",
+             BOLD + GREEN)
+        return 0
+    note(f"\n⚠  {complete} of {total} comparisons complete and current "
+         f"({fmt_duration(elapsed)}); see the rows above. ⚠ = kept from that date, "
+         "❌ = missing.", BOLD + YELLOW)
+    return 1
 
 
 if __name__ == "__main__":

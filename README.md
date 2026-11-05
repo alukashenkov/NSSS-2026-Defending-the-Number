@@ -1,17 +1,22 @@
 # Scanner Comparison Demo
 
+![NSSS 2026: Beyond Compliance, Building Resilience](slides/nsss-2026-banner.png)
+
 **Talk:** [Defending the Number: Making an SBOM → CRA Decision You Can Explain Later](https://nsss.se/f2026/talks/making-an-sbom/)
 (Andrey Lukashenkov, NSSS Fall 2026 — Nordic Software Security Summit, Stockholm, 4–6 November 2026)
+
+**Slides:** [NSSS-Defending-the-Number-v1.pdf](slides/NSSS-Defending-the-Number-v1.pdf) (the deck as delivered)
 
 Demo material for that talk. A deliberately vulnerable container image is
 built, SBOMs are generated from it with two different tools (syft and Trivy), and four
 vulnerability scanners are pointed at each SBOM so their findings can be compared side
-by side.
+by side. OSV runs twice, once by binary package name and once by source package
+(*Src OSV*), so the report has five columns.
 
-The interesting result is not the vulnerability count. It is how far four scanners
+The interesting result is not the vulnerability count. It is how far the scanners
 disagree while looking at *identical* input, how much the same scanner's answer moves
-when a different tool wrote the SBOM, and how few of the 755 findings actually
-warrant attention.
+when a different tool wrote the SBOM or a different lookup key is used, and how few
+of the findings actually warrant attention.
 
 > **⚠️ The application is intentionally insecure.** It hands arbitrary command
 > execution to anyone who can reach port 8080. Run it only in a throwaway container on
@@ -46,11 +51,12 @@ The Vulners column and the CVSS/EPSS/KEV enrichment need a
 1. Sign up or log in at [vulners.com](https://vulners.com/login).
 2. **Recommended:** start the free 30-day trial from your account (see
    [pricing](https://vulners.com/pricing)). The free plan works too, but its 100 API
-   credits a month run out quickly here. A full refresh of all four SBOMs makes on
-   the order of 130 Vulners requests: four SBOM audits, plus CVE lookups in batches of
-   100 (once for the report, once for OSV's enrichment). Most of them come from the
-   4,480 CVEs on the 24.04 Trivy SBOM. That is more than the free plan's monthly
-   credits in a single run, and the daily refresh repeats it every day you run it.
+   credits a month run out quickly here. A full refresh makes one SBOM audit per SBOM,
+   plus CVE lookups in batches of 100: once for the report, and once for each OSV
+   mode's enrichment. The request count therefore grows with the number of CVEs found.
+   Kernel-heavy results dominate it: Trivy on its own 24.04 SBOM, and Src OSV on
+   every SBOM. A single run can exceed the free plan's monthly credits, and the daily
+   refresh repeats it every day you run it.
 3. Open the **API keys** tab in your account and generate a key. Give it a name,
    choose the **`api`** scope, and pick the license you want it billed against. Each
    license (free, trial, paid) needs its own key, so if you started the trial,
@@ -125,13 +131,12 @@ Every parameter is load-bearing:
 | `SYFT_FILE_METADATA_SELECTION=none` | Suppresses ~11k per-file components. They bury the 684 packages the demo is about and quadruple the file size. |
 | `SYFT_GOLANG_MAIN_MODULE_VERSION_FROM_CONTENTS=true` | Recovers versions for Go main modules built without VCS stamping. Without it, syft emits version-less PURLs such as `pkg:golang/github.com/docker/compose/v2`, which no version-matching scanner can resolve — they showed up as packages Vulners "failed" to scan. |
 | `SYFT_FORMAT_PRETTY=true` | Indented JSON. Same content, readable and diffable. |
-| `-o cyclonedx-json=…` | CycloneDX is the one format all four scanners accept. |
+| `-o cyclonedx-json=…` | CycloneDX is the one format every scanner here accepts. |
 
 Note that `SYFT_GOLANG_CAPTURE_SYMBOLS` is deliberately **not** set: Go function
 symbols have nowhere to live in CycloneDX, so enabling it changes nothing but syft's
 internal package-id hashes. Grype will warn that Go matching falls back to module
-granularity; that is the format's limit, and in practice it costs nothing here —
-every Grype-exclusive finding in both images is a `deb` package, not a Go module.
+granularity; that is the format's limit, not something a flag can fix.
 
 ### Trivy parameters
 
@@ -161,7 +166,8 @@ These differences come from each tool's output format, and no flag removes them:
 
 The epoch spelling is folded together by `compare_scanners.py` (see *How packages
 and vulnerabilities are matched*). The source-package spelling is not, because it
-changes what the scanners themselves find. See *Same image, different SBOM*.
+changes what Grype and Trivy themselves find. See *Same image, different SBOM*. Src
+OSV is the one column that reads both spellings (see *OSV by source package*).
 
 ### SBOM quality
 
@@ -207,26 +213,88 @@ packages. Trivy fills in the root relationships, deb suppliers and PyPI hashes, 
 scores higher, but it records fewer licences.
 
 That makes a useful counterpoint on a slide. The better-scoring SBOM is the one on which
-Grype finds 26 vulnerable Ubuntu packages instead of 157 (see *Same image, different SBOM*). The
+Grype misses most of its Ubuntu findings (see *Same image, different SBOM*). The
 score measures document completeness, not whether the SBOM works.
 
 ## 3. Compare the scanners
 
 ```sh
 python3 compare_scanners.py                 # every SBOM in sboms/, refresh anything not scanned today
-python3 compare_scanners.py --refresh force # rescan now
+python3 compare_scanners.py --refresh force # delete scan data, rescan everything (OSV record cache kept)
 python3 compare_scanners.py --refresh never # re-render from existing artifacts, no network
 python3 compare_scanners.py sboms/insecureapp-20.04.syft.cdx.json sboms/insecureapp-20.04.trivy.cdx.json
 ```
 
-A full forced rescan of all four SBOMs takes ~50 s; re-rendering takes a few seconds.
+Re-rendering takes a few seconds. A rescan runs the scanners concurrently, and
+fetches OSV records through a pool shared across SBOMs. Src OSV pulls in far more OSV
+records than plain OSV (about 5,000, mostly Ubuntu kernel CVEs), so the very first run,
+and any `--refresh force`, takes several minutes fetching them. After that the records
+are cached across days: OSV's batch query reports each record's `modified` timestamp,
+and only records whose timestamp has changed since they were cached are fetched again.
 
 The OSV scanner is also usable on its own, which is handy for showing a single
-source's view before the four-way comparison:
+source's view before the full comparison:
 
 ```sh
-python3 query_osv_purl.py sboms/insecureapp-20.04.syft.cdx.json
+python3 query_osv_purl.py sboms/insecureapp-20.04.syft.cdx.json            # binary names, as the SBOM spells them
+python3 query_osv_purl.py sboms/insecureapp-20.04.syft.cdx.json --source   # deb packages by source package
 ```
+
+### OSV by source package (Src OSV)
+
+OSV's Ubuntu records are keyed by *source* package. A query for `openssl` at
+`1.1.1f-1ubuntu2.24` returns its advisories, while `libssl1.1` at the same version
+returns nothing. Querying the
+SBOM's binary PURLs as-is therefore only matches debs whose binary name equals their
+source name. The **Src OSV** column asks OSV about each deb's source package instead
+and reports the hits against the binary PURL. PyPI and Go packages are queried
+unchanged.
+
+The source package is read from wherever the generator put it:
+
+| | syft | Trivy |
+|---|---|---|
+| Source name | `upstream=util-linux` PURL qualifier | `aquasecurity:trivy:SrcName` property |
+| Source version | `upstream=util-linux%402.34-0.1ubuntu9.6`; absent means same as the binary | `SrcEpoch` + `SrcVersion` + `SrcRelease` properties |
+| No source recorded | the deb is its own source | the deb is its own source |
+
+The query is written as `pkg:deb/ubuntu/<source>@<epoch%3Aversion>?distro=…`, with
+the epoch inline. That matters for Trivy SBOMs: OSV ignores an `?epoch=1` qualifier
+and matches Ubuntu records against exact version lists that carry the epoch, so
+`diffutils@3.7-3?epoch=1` matches nothing while `diffutils@1%3A3.7-3` matches. A
+dropped epoch is a miss, not an over-match. Plain OSV makes the same fix: it queries
+each PURL as the SBOM spells it but moves a `?epoch=` inline, so it gives the same
+answer on both SBOMs of an image. The SBOM file itself is never rewritten.
+Both generators' encodings resolve to identical source queries (293 debs → 160 sources
+on 20.04, 249 → 140 on 24.04), so Src OSV gives the same answer for both SBOMs of an
+image.
+
+OSV also ignores the `distro=` qualifier. The hits are still release-correct, because Ubuntu
+records list the affected versions explicitly for each release. A match means the
+installed source version appears in that release's own entry.
+
+What the extra findings are:
+
+- **Mostly kernel CVEs against the kernel headers.** syft's `upstream=linux` has no
+  version, which Src OSV reads as "same as the binary", so `linux-libc-dev` is
+  queried as source `linux` at the kernel version. These are the bulk of Src OSV's
+  findings on both images. This is the same trap Trivy falls into on its
+  own 24.04 SBOM (see *Same image, different SBOM*). A container never runs the
+  kernel whose headers it ships.
+- **Ubuntu's full per-CVE tracker.** Most hits are `UBUNTU-CVE-*` records, which
+  include CVEs Ubuntu has not fixed or has deferred. Kernel hits also bring
+  `LSN-*` Livepatch notices, which only apply to a running host kernel. Notices
+  (`USN-*` and `LSN-*`) list every CVE they cover across every release they
+  cover, and OSV matches the notice as a whole, so a notice is shown only as
+  provenance on CVEs whose own `UBUNTU-CVE-*` record also matched, and never adds
+  a finding of its own.
+- **Genuine misses by plain OSV.** For example, `libssl1.1` picks up the `openssl`
+  USNs, which plain OSV cannot see under the binary name.
+
+For non-deb packages, and debs whose binary and source names match, both modes send
+the same query. Src OSV is therefore a superset of plain OSV,
+and plain OSV should have no exclusive findings. What its column shows is how much a
+binary-name lookup misses.
 
 ## Output
 
@@ -235,18 +303,30 @@ with one file per scanner:
 
 ```
 results/<sbom-name>/osv.json                # via query_osv_purl.py
+results/<sbom-name>/osv-src.json            # via query_osv_purl.py --source
 results/<sbom-name>/grype.json              # grype, CycloneDX
 results/<sbom-name>/trivy.json              # trivy, native JSON
 results/<sbom-name>/vulners.json            # Vulners SBOM audit API
 results/<sbom-name>/vulners-cve-data.json   # per-CVE CVSS/EPSS/KEV
 results/<sbom-name>/report-<sbom-name>.md   # the rendered comparison
-results/.osv-details-cache.json             # shared OSV record cache
+results/.osv-details-cache.json             # shared OSV record cache: identity, severity, modified; kept across days
 ```
 
 The sbomqs reports are the exception: they describe an SBOM rather than a scan, so
 they sit beside it in `sboms/` as `<sbom-name>.sbomqs-cisa2026.{txt,json}`.
 
-The report prints to the terminal in colour and to the Markdown file without it. The
+The report is written only to the Markdown file. The terminal shows progress instead:
+a live status line while scanners run, one line per scanner as it finishes, the report
+path per SBOM, and a closing **Comparison status** table with one row per SBOM. In that
+table ✅ means scanned today, `⚠ 10-31` means kept from an earlier day (its refresh
+failed or was skipped), and `❌ none` means no artifact. The exit code is 0 only when
+every comparison is complete and current.
+
+`--refresh force` deletes each SBOM's artifacts, CVE enrichment and report just before
+that SBOM is rescanned. The shared OSV record cache is kept, since every cached record
+is checked against OSV's `modified` timestamp and refetched if it changed. A scanner that then fails
+shows as missing rather than as yesterday's answer. Grype's and Trivy's own
+vulnerability databases are not deleted; both update them on every run anyway. The
 filename carries the SBOM name, and with it the image and the generator
 (`report-insecureapp-20.04.trivy.md`), so reports stay distinguishable once they are
 copied out of `results/`.
@@ -262,27 +342,29 @@ once it is moved out of `results/`, mailed around or pasted into slides:
 - **Image:** `insecureapp-20.04:latest`
 - **Digest:** `sha256:ca3fa0cb11c0295b461fc4674d29bf9569df312c71dc62e468b85baab422102d`
 - **SBOM:** `insecureapp-20.04.syft.cdx.json` — CycloneDX 1.7, syft 1.54.1, built 2026-10-16T12:38:24+02:00
-- **Report generated:** 2026-10-16T12:40:38
-- **Scanners:** OSV (api.osv.dev) · Grype (grype 0.120.1) · Trivy (trivy 0.76.0) · Vulners (vulners.com audit API v4)
+- **Report generated:** 2026-11-02T15:41:06
+- **Scanners:** OSV (api.osv.dev) · Src OSV (api.osv.dev, by source package) · Grype (grype 0.121.0) · Trivy (trivy 0.76.1) · Vulners (vulners.com audit API v4)
 ```
 
 The image name and digest come from the SBOM's `metadata.component`, and each scanner
 version is read from its own artifact — so the header describes the run that actually
 happened, not what the commands were supposed to do.
 
-Then, per package:
+Then, per package (values illustrative; they move with every rescan):
 
 ```
 ┌─ pkg:pypi/aiohttp@3.9.1
-│ OGTV
-│ ✔✔✔✔ CVE-2024-23334    HIGH    7.5  76.9% KEV  ↳ O:GHSA-5h86-8mv2-jq9f,PYSEC-2024-24 | V:GHSA-5H86-8MV2-JQ9F
-┌─ pkg:pypi/cryptography@3.3.2
-│ OGTV
-│ ✔✘✘✔ CVE-2026-69248    HIGH    8.3   0.3%   ·  ↳ O:PYSEC-2026-3554 | V:OSV:PYSEC-2026-3554
-│ ✘✘✘✔ CVE-2026-34180    HIGH    7.5   1.0%   ·  ↳ V:SNYK:PYTHON-CRYPTOGRAPHY-17344551
+│ OSGTV
+│ ✔✔✔✔✔ CVE-2024-23334    HIGH      7.5  76.9% KEV  ↳ O:GHSA-5h86-8mv2-jq9f,PYSEC-2024-24 | S:GHSA-5h86-8mv2-jq9f,PYSEC-2024-24 | V:GHSA-5H86-8MV2-JQ9F
+┌─ pkg:deb/ubuntu/libssl1.1@1.1.1f-1ubuntu2.24
+│ OSGTV
+│ ✘✔✘✘✘ CVE-2024-5535     CRITICAL  9.1   5.6%   ·  ↳ S:USN-8678-2
+┌─ pkg:deb/ubuntu/linux-libc-dev@5.4.0-216.236
+│ OSGTV
+│ ✘✔✘✘✘ CVE-2023-2640     HIGH      7.8  15.2% KEV  ↳ S:UBUNTU-CVE-2023-2640
 ```
 
-`OGTV` are OSV, Grype, Trivy and Vulners. Per scanner: `✔` found it, `✘` scanned the
+`OSGTV` are OSV, Src OSV, Grype, Trivy and Vulners. Per scanner: `✔` found it, `✘` scanned the
 package but did not report it, `-` never saw the package at all — a distinction that
 matters, because "didn't find" and "didn't look" are very different claims.
 
@@ -320,60 +402,77 @@ vocabularies are unified too (GHSA `MODERATE` → `MEDIUM`, Red Hat `IMPORTANT` 
 Vulnerability data changes daily, so freshness is tracked per artifact: anything whose
 mtime is not today is re-scanned before the report renders. One run a day always
 compares current data, and a second run the same day is nearly free. Grype and Trivy
-update their own databases on each invocation; the OSV record cache and the CVE
-enrichment self-discard when the date rolls over.
+update their own databases on each invocation; the CVE enrichment self-discards when
+the date rolls over, and the OSV record cache refetches any record OSV has modified. If a scanner's refresh fails, its
+previous artifact is kept and the report header lists it under **⚠ Not scanned today**,
+so a column that is days older than its neighbours is visible rather than silent.
 
-## Current results
+## Reading the comparison
 
-These are from the 2026-10-16 run, whose reports are in `results/`. A rerun on a
-later day will change the numbers.
+The report states the numbers. These are the principles for reading them:
 
-| | 20.04 syft | 20.04 Trivy | 24.04 syft | 24.04 Trivy |
-|---|---|---|---|---|
-| SBOM components | 685 | 687 | 617 | 619 |
-| Deduplicated PURLs | 541 | 540 | 535 | 534 |
-| Packages with findings | 206 | 172 | 152 | 133 |
-| OSV / Grype / Trivy / Vulners — vuln IDs | 513 / 688 / 222 / 533 | 511 / 477 / 223 / 533 | 275 / 360 / 197 / 311 | 274 / 252 / 4381 / 311 |
-| All four agree | 222 | 222 | 188 | 187 |
-| Total distinct | 755 | 681 | 422 | 4499 |
-| Exclusive to one scanner | OSV 33, Grype 77, Trivy 0, Vulners 29 | OSV 33, Grype 2, Trivy 1, Vulners 165 | OSV 21, Grype 28, Trivy 0, Vulners 30 | OSV 21, Grype 0, Trivy 4105, Vulners 31 |
-| Exploited in the wild | 1 | 1 | 1 | 4 |
-
-All four scanners cover every package in every SBOM. On the syft SBOMs, only one of
-the 755 / 422 findings is known to be exploited in the wild: `CVE-2024-23334` in
-aiohttp, with 76.9% EPSS.
+- **Agreement is the stable signal.** "All five agree" is the set every lookup
+  method finds. It is typically the PyPI and Go findings, which have no binary/source
+  split to get wrong. Totals move with every
+  rescan and with every change of lookup method. The agreed core moves far less.
+- **Exclusive counts usually measure a matching method, not a scanner's
+  knowledge.** A column with thousands of exclusive findings is almost always
+  matching a source package that others don't. Src OSV and Trivy-on-Trivy match
+  the kernel source against `linux-libc-dev`. A column that drops to near-zero
+  exclusives has usually lost its source mapping, as Grype does on a Trivy SBOM.
+  Check the `↳ provenance` IDs before reading a difference as a miss.
+- **Exploited-in-the-wild needs context.** The KEV flag is per CVE, not per
+  deployment. Kernel CVEs matched against kernel headers carry it like any other
+  CVE, yet a container never runs that kernel. The application-dependency rows
+  (aiohttp, cryptography, requests…) are the ones that describe code the container
+  actually executes. The more complete the lookup, the more alarming-looking
+  findings it adds that are about a kernel the container does not run.
 
 ### Same image, different SBOM
 
 OSV and Vulners give nearly the same answer for both SBOMs of an image, because they
-match on name and version alone. Grype and Trivy do not. Both match Ubuntu
+match on name and version alone. Src OSV gives *exactly* the same answer, because it
+reads both generators' source-package encodings. Grype and Trivy do not. Both match Ubuntu
 advisories by *source* package, and each reads the source package only from its own
 generator's SBOM format:
 
 - **Grype on a Trivy SBOM** reads source packages from syft's `upstream=` PURL
   qualifier. Trivy records them in `aquasecurity:trivy:Src*` properties instead, so
-  Grype only matches debs whose binary name equals their source name. On 20.04 it
-  finds 26 vulnerable Ubuntu packages instead of 157; all 131 it misses are packages
-  like `bsdutils` (source `util-linux`). Grype's exclusive findings fall from 77 to 2,
-  and the findings it shared with Vulners become Vulners-exclusive (29 → 165).
+  Grype only matches debs whose binary name equals their source name. It misses every
+  package like `bsdutils` (source `util-linux`). Its exclusive findings all but
+  vanish, and the findings it shared with Vulners become Vulners-exclusive.
 - **Trivy on its own SBOM** gets `SrcName=linux` *and* `SrcVersion` for
-  `linux-libc-dev`, so on 24.04 it matches Ubuntu's whole kernel CVE list against the
-  kernel headers package: 4,102 findings (2,682 affected, 1,420 fixed). Three of them
-  are exploited in the wild. syft's `upstream=linux` carries no version, so Trivy
-  finds none of these on the syft SBOM, and no other scanner flags `linux-libc-dev` on
-either SBOM.
-  On 20.04, Trivy reports nothing against `linux-libc-dev` from either SBOM.
+  `linux-libc-dev`. On 24.04 that makes it match Ubuntu's whole kernel CVE list,
+  fixed and unfixed, against the kernel headers package. syft's `upstream=linux`
+  carries no version, so Trivy finds none of these on the syft SBOM. On 20.04, Trivy
+  reports nothing against `linux-libc-dev` from either SBOM.
+- **Src OSV** treats syft's version-less `upstream=linux` as "same version as the
+  binary", so it flags `linux-libc-dev` on every SBOM. On the 24.04 Trivy SBOM most
+  of those overlap with Trivy's kernel findings, which is why Src OSV's exclusive
+  count is much lower there than on syft's SBOM.
 
-Scanning the same image, the same scanner reports 197 or 4,381 findings depending on
-which tool wrote the SBOM. Neither generator's output is "wrong", but each is only fully
+Scanning the same image, the same scanner can report an order of magnitude more
+findings depending on which tool wrote the SBOM. Neither generator's output is "wrong", but each is only fully
 understood by its own vendor's scanner.
 
 ## Adding a scanner
 
 Add one `Scanner(...)` entry to `SCANNERS` in `compare_scanners.py` plus a
-`refresh_*` / `load_*` pair. Every report section iterates that tuple, so nothing else
+`refresh_*(sbom, out_path, progress)` / `load_*` pair; `progress` is an optional
+callback for the live status line. Every report section iterates that tuple, so nothing else
 needs touching. A loader returns a `ScanResult` keyed by PURL, or by `(name, version)`
 with `keyed_by_purl=False` when the scanner does not emit PURLs, as Vulners does not.
+
+## Tests
+
+`test_query_osv_purl.py` pins the rules the OSV columns depend on: how `dedupe_vulns`
+folds aliases and Ubuntu notices, how a Trivy `?epoch=` moves inline in binary-mode
+queries, and when a cached OSV record is reused. It is stdlib `unittest` only and
+makes no network calls:
+
+```sh
+python3 -m unittest test_query_osv_purl
+```
 
 ## Known gaps
 

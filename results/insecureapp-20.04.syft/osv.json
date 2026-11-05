@@ -1,12 +1,13 @@
 {
   "meta": {
     "tool": "query_osv_purl",
+    "mode": "binary",
     "sbomFile": "insecureapp-20.04.syft.cdx.json",
-    "created": "2026-10-16T12:39:37",
+    "created": "2026-11-02T15:39:51",
     "totalPackages": 541,
-    "affectedPackages": 71,
-    "totalAdvisories": 740,
-    "uniqueVulnerabilities": 513,
+    "affectedPackages": 72,
+    "totalAdvisories": 775,
+    "uniqueVulnerabilities": 529,
     "enriched": true
   },
   "packages": [
@@ -21,7 +22,7 @@
       "purl": "pkg:pypi/aiohttp@3.9.1",
       "name": "aiohttp",
       "version": "3.9.1",
-      "uniqueVulnCount": 38,
+      "uniqueVulnCount": 46,
       "vulnerabilities": [
         {
           "id": "CVE-2024-23334",
@@ -178,10 +179,80 @@
           ]
         },
         {
+          "id": "CVE-2026-111063",
+          "cvss": 6.3,
+          "severity": "MODERATE",
+          "epss": 0.00233,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-494j-54xm-rwp3"
+          ]
+        },
+        {
+          "id": "CVE-2026-111064",
+          "cvss": 8.2,
+          "severity": "HIGH",
+          "epss": 0.00399,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-5wr8-gcqf-gqf3"
+          ]
+        },
+        {
+          "id": "CVE-2026-111065",
+          "cvss": 6.9,
+          "severity": "MODERATE",
+          "epss": 0.00395,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-6cjc-53gc-5rqm"
+          ]
+        },
+        {
+          "id": "CVE-2026-111066",
+          "cvss": 8.2,
+          "severity": "HIGH",
+          "epss": 0.00412,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-9xw5-w5jj-pvcg"
+          ]
+        },
+        {
+          "id": "CVE-2026-111748",
+          "cvss": 6.3,
+          "severity": "MODERATE",
+          "epss": 0.00386,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-f9xw-jh8m-3mwq"
+          ]
+        },
+        {
+          "id": "CVE-2026-111749",
+          "cvss": 2.3,
+          "severity": "LOW",
+          "epss": 0.00384,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-gx76-c99x-2c96"
+          ]
+        },
+        {
+          "id": "CVE-2026-111750",
+          "cvss": 6.3,
+          "severity": "MODERATE",
+          "epss": 0.00382,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GHSA-pqxq-w44r-73xw"
+          ]
+        },
+        {
           "id": "CVE-2026-22815",
           "cvss": 7.5,
           "severity": "MODERATE",
-          "epss": 0.0044,
+          "epss": 0.00457,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-w2fm-2cpv-w7v5",
@@ -192,7 +263,7 @@
           "id": "CVE-2026-34513",
           "cvss": 7.5,
           "severity": "LOW",
-          "epss": 0.00609,
+          "epss": 0.00457,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-hcc4-c3v8-rx92",
@@ -203,7 +274,7 @@
           "id": "CVE-2026-34514",
           "cvss": 6.9,
           "severity": "LOW",
-          "epss": 0.00398,
+          "epss": 0.00327,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-2vrm-gr82-f7m5",
@@ -214,7 +285,7 @@
           "id": "CVE-2026-34515",
           "cvss": 8.7,
           "severity": "MODERATE",
-          "epss": 0.00497,
+          "epss": 0.0045,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-p998-jp59-783m",
@@ -225,7 +296,7 @@
           "id": "CVE-2026-34516",
           "cvss": 8.7,
           "severity": "MODERATE",
-          "epss": 0.00609,
+          "epss": 0.00457,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-m5qp-6w8w-w647",
@@ -236,7 +307,7 @@
           "id": "CVE-2026-34517",
           "cvss": 6.9,
           "severity": "LOW",
-          "epss": 0.00507,
+          "epss": 0.00399,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-3wq7-rqq7-wx6j",
@@ -247,7 +318,7 @@
           "id": "CVE-2026-34518",
           "cvss": 6.9,
           "severity": "LOW",
-          "epss": 0.00405,
+          "epss": 0.0035,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-966j-vmvw-g2g9",
@@ -258,7 +329,7 @@
           "id": "CVE-2026-34519",
           "cvss": 6.9,
           "severity": "LOW",
-          "epss": 0.00398,
+          "epss": 0.00304,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-mwh4-6h8g-pg8w",
@@ -269,7 +340,7 @@
           "id": "CVE-2026-34520",
           "cvss": 9.1,
           "severity": "LOW",
-          "epss": 0.00676,
+          "epss": 0.00479,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-63hf-3vf5-4wqf",
@@ -280,7 +351,7 @@
           "id": "CVE-2026-34525",
           "cvss": 6.3,
           "severity": "MODERATE",
-          "epss": 0.00393,
+          "epss": 0.00299,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-c427-h43c-vf67",
@@ -291,7 +362,7 @@
           "id": "CVE-2026-34993",
           "cvss": 7.3,
           "severity": "MODERATE",
-          "epss": 0.00495,
+          "epss": 0.00179,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-jg22-mg44-37j8",
@@ -302,7 +373,7 @@
           "id": "CVE-2026-47265",
           "cvss": 8.7,
           "severity": "MODERATE",
-          "epss": 0.00213,
+          "epss": 0.0015,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-hg6j-4rv6-33pg",
@@ -440,6 +511,14 @@
             "GHSA-cq5v-8q36-5273",
             "PYSEC-2026-3545"
           ]
+        },
+        {
+          "id": "GHSA-2g87-pp6c-29x5",
+          "cvss": null,
+          "severity": "HIGH",
+          "epss": null,
+          "wildExploited": false,
+          "sourceAdvisories": []
         }
       ]
     },
@@ -503,7 +582,7 @@
       "purl": "pkg:deb/ubuntu/binutils@2.34-6ubuntu1.11?arch=arm64&distro=ubuntu-20.04",
       "name": "binutils",
       "version": "2.34-6ubuntu1.11",
-      "uniqueVulnCount": 59,
+      "uniqueVulnCount": 56,
       "vulnerabilities": [
         {
           "id": "CVE-2017-13716",
@@ -546,20 +625,10 @@
           ]
         },
         {
-          "id": "CVE-2025-0840",
-          "cvss": 7.5,
-          "severity": "HIGH",
-          "epss": 0.00747,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-7899-1"
-          ]
-        },
-        {
           "id": "CVE-2025-11082",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00254,
+          "epss": 0.0026,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11082"
@@ -569,7 +638,7 @@
           "id": "CVE-2025-11083",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00255,
+          "epss": 0.00261,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11083"
@@ -579,7 +648,7 @@
           "id": "CVE-2025-11412",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00203,
+          "epss": 0.00208,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11412"
@@ -589,7 +658,7 @@
           "id": "CVE-2025-11413",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00219,
+          "epss": 0.00224,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11413"
@@ -599,7 +668,7 @@
           "id": "CVE-2025-11414",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00203,
+          "epss": 0.00208,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11414"
@@ -629,7 +698,7 @@
           "id": "CVE-2025-11494",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00213,
+          "epss": 0.00218,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11494"
@@ -639,7 +708,7 @@
           "id": "CVE-2025-11495",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00237,
+          "epss": 0.00242,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11495"
@@ -669,27 +738,17 @@
           "id": "CVE-2025-1152",
           "cvss": 3.7,
           "severity": "LOW",
-          "epss": 0.00616,
+          "epss": 0.00611,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-1152"
           ]
         },
         {
-          "id": "CVE-2025-1153",
-          "cvss": 5.9,
-          "severity": "MEDIUM",
-          "epss": 0.01357,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-7899-1"
-          ]
-        },
-        {
           "id": "CVE-2025-1178",
           "cvss": 6.3,
           "severity": "MEDIUM",
-          "epss": 0.00803,
+          "epss": 0.00797,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-1178"
@@ -709,20 +768,10 @@
           "id": "CVE-2025-1181",
           "cvss": 5.1,
           "severity": "MEDIUM",
-          "epss": 0.00718,
+          "epss": 0.00712,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-1181",
-            "USN-7899-1"
-          ]
-        },
-        {
-          "id": "CVE-2025-1182",
-          "cvss": 5.1,
-          "severity": "MEDIUM",
-          "epss": 0.00593,
-          "wildExploited": false,
-          "sourceAdvisories": [
             "USN-7899-1"
           ]
         },
@@ -752,7 +801,7 @@
           "id": "CVE-2025-3198",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00282,
+          "epss": 0.00287,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-3198",
@@ -763,7 +812,7 @@
           "id": "CVE-2025-5244",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00284,
+          "epss": 0.00297,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-5244",
@@ -774,7 +823,7 @@
           "id": "CVE-2025-5245",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00286,
+          "epss": 0.00299,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-5245",
@@ -845,7 +894,7 @@
           "id": "CVE-2025-69645",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00173,
+          "epss": 0.00192,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69645"
@@ -855,7 +904,7 @@
           "id": "CVE-2025-69651",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00244,
+          "epss": 0.00274,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69651"
@@ -865,7 +914,7 @@
           "id": "CVE-2025-69652",
           "cvss": 6.2,
           "severity": "MEDIUM",
-          "epss": 0.00179,
+          "epss": 0.00202,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69652"
@@ -886,7 +935,7 @@
           "id": "CVE-2025-8225",
           "cvss": 4.8,
           "severity": "MEDIUM",
-          "epss": 0.00239,
+          "epss": 0.00273,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-8225",
@@ -917,7 +966,7 @@
           "id": "CVE-2026-3441",
           "cvss": 7.1,
           "severity": "HIGH",
-          "epss": 0.00199,
+          "epss": 0.00191,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-3441"
@@ -927,7 +976,7 @@
           "id": "CVE-2026-3442",
           "cvss": 7.1,
           "severity": "HIGH",
-          "epss": 0.00199,
+          "epss": 0.00265,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-3442"
@@ -937,7 +986,7 @@
           "id": "CVE-2026-4647",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00168,
+          "epss": 0.00171,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4647"
@@ -947,7 +996,7 @@
           "id": "CVE-2026-6844",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00147,
+          "epss": 0.00104,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-6844"
@@ -957,7 +1006,7 @@
           "id": "CVE-2026-6845",
           "cvss": 5.0,
           "severity": "MEDIUM",
-          "epss": 0.00145,
+          "epss": 0.00147,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-6845"
@@ -967,7 +1016,7 @@
           "id": "CVE-2026-6846",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00196,
+          "epss": 0.00171,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-6846"
@@ -1148,7 +1197,7 @@
           "id": "CVE-2026-42250",
           "cvss": 4.8,
           "severity": "MEDIUM",
-          "epss": 0.00182,
+          "epss": 0.00126,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-42250",
@@ -1161,14 +1210,23 @@
       "purl": "pkg:deb/ubuntu/ca-certificates@20240203~20.04.1?arch=all&distro=ubuntu-20.04",
       "name": "ca-certificates",
       "version": "20240203~20.04.1",
-      "uniqueVulnCount": 0,
-      "vulnerabilities": []
+      "uniqueVulnCount": 1,
+      "vulnerabilities": [
+        {
+          "id": "USN-8944-2",
+          "cvss": null,
+          "severity": null,
+          "epss": null,
+          "wildExploited": false,
+          "sourceAdvisories": []
+        }
+      ]
     },
     {
       "purl": "pkg:pypi/certifi@2019.11.28",
       "name": "certifi",
       "version": "2019.11.28",
-      "uniqueVulnCount": 3,
+      "uniqueVulnCount": 4,
       "vulnerabilities": [
         {
           "id": "CVE-2022-23491",
@@ -1200,6 +1258,16 @@
           "wildExploited": false,
           "sourceAdvisories": [
             "PYSEC-2024-230"
+          ]
+        },
+        {
+          "id": "GHSA-6q48-6c7w-9gw2",
+          "cvss": null,
+          "severity": "CRITICAL",
+          "epss": null,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "PYSEC-2026-4320"
           ]
         }
       ]
@@ -1245,7 +1313,7 @@
           "id": "CVE-2025-5278",
           "cvss": 4.4,
           "severity": "MEDIUM",
-          "epss": 0.00288,
+          "epss": 0.0031,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-5278"
@@ -1277,7 +1345,7 @@
           "id": "CVE-2023-0286",
           "cvss": 7.4,
           "severity": "HIGH",
-          "epss": 0.71239,
+          "epss": 0.69286,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-x4qr-2fvf-3mr5",
@@ -1332,7 +1400,7 @@
           "id": "CVE-2026-26007",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.00389,
+          "epss": 0.0039,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-r6ph-v2qm-q3c2",
@@ -1343,7 +1411,7 @@
           "id": "CVE-2026-34073",
           "cvss": 6.3,
           "severity": "LOW",
-          "epss": 0.00184,
+          "epss": 0.00227,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-m959-cc7f-wv43",
@@ -1354,7 +1422,7 @@
           "id": "CVE-2026-69248",
           "cvss": 8.3,
           "severity": "HIGH",
-          "epss": 0.00309,
+          "epss": 0.00244,
           "wildExploited": false,
           "sourceAdvisories": [
             "PYSEC-2026-3554"
@@ -1364,7 +1432,7 @@
           "id": "CVE-2026-69249",
           "cvss": 8.7,
           "severity": "HIGH",
-          "epss": 0.00252,
+          "epss": 0.00262,
           "wildExploited": false,
           "sourceAdvisories": [
             "PYSEC-2026-3553"
@@ -1408,7 +1476,7 @@
       "purl": "pkg:deb/ubuntu/curl@7.68.0-1ubuntu2.25?arch=arm64&distro=ubuntu-20.04",
       "name": "curl",
       "version": "7.68.0-1ubuntu2.25",
-      "uniqueVulnCount": 30,
+      "uniqueVulnCount": 33,
       "vulnerabilities": [
         {
           "id": "CVE-2025-14017",
@@ -1461,16 +1529,6 @@
           ]
         },
         {
-          "id": "CVE-2026-13608",
-          "cvss": 7.4,
-          "severity": "HIGH",
-          "epss": 0.00479,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-8820-1"
-          ]
-        },
-        {
           "id": "CVE-2026-18924",
           "cvss": 9.1,
           "severity": "CRITICAL",
@@ -1485,7 +1543,7 @@
           "id": "CVE-2026-1965",
           "cvss": 6.5,
           "severity": "MEDIUM",
-          "epss": 0.00264,
+          "epss": 0.0027,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-1965",
@@ -1496,7 +1554,7 @@
           "id": "CVE-2026-3783",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00525,
+          "epss": 0.00473,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-3783",
@@ -1507,7 +1565,7 @@
           "id": "CVE-2026-3784",
           "cvss": 6.5,
           "severity": "MEDIUM",
-          "epss": 0.00469,
+          "epss": 0.00428,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-3784",
@@ -1518,7 +1576,7 @@
           "id": "CVE-2026-4873",
           "cvss": 5.9,
           "severity": "MEDIUM",
-          "epss": 0.00359,
+          "epss": 0.00329,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4873"
@@ -1538,7 +1596,7 @@
           "id": "CVE-2026-5773",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00657,
+          "epss": 0.00618,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-5773"
@@ -1575,16 +1633,6 @@
           ]
         },
         {
-          "id": "CVE-2026-80229",
-          "cvss": 7.5,
-          "severity": "HIGH",
-          "epss": 0.00563,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-8820-1"
-          ]
-        },
-        {
           "id": "CVE-2026-80230",
           "cvss": 7.5,
           "severity": "HIGH",
@@ -1592,16 +1640,6 @@
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-80230",
-            "USN-8820-1"
-          ]
-        },
-        {
-          "id": "CVE-2026-80255",
-          "cvss": 7.5,
-          "severity": "HIGH",
-          "epss": 0.00478,
-          "wildExploited": false,
-          "sourceAdvisories": [
             "USN-8820-1"
           ]
         },
@@ -1637,6 +1675,28 @@
           ]
         },
         {
+          "id": "CVE-2026-86414",
+          "cvss": 9.1,
+          "severity": "CRITICAL",
+          "epss": 0.00676,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-86414",
+            "USN-8932-1"
+          ]
+        },
+        {
+          "id": "CVE-2026-87864",
+          "cvss": 8.1,
+          "severity": "HIGH",
+          "epss": 0.00828,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-87864",
+            "USN-8932-1"
+          ]
+        },
+        {
           "id": "CVE-2026-8924",
           "cvss": 9.1,
           "severity": "CRITICAL",
@@ -1669,13 +1729,57 @@
           ]
         },
         {
-          "id": "CVE-2026-9080",
-          "cvss": 7.3,
-          "severity": "HIGH",
-          "epss": 0.00494,
+          "id": "CVE-2026-92388",
+          "cvss": 9.1,
+          "severity": "CRITICAL",
+          "epss": 0.00699,
           "wildExploited": false,
           "sourceAdvisories": [
-            "USN-8820-1"
+            "UBUNTU-CVE-2026-92388",
+            "USN-8932-1"
+          ]
+        },
+        {
+          "id": "CVE-2026-92389",
+          "cvss": 8.1,
+          "severity": "HIGH",
+          "epss": 0.00721,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-92389",
+            "USN-8932-1"
+          ]
+        },
+        {
+          "id": "CVE-2026-92390",
+          "cvss": 7.5,
+          "severity": "HIGH",
+          "epss": 0.00589,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-92390"
+          ]
+        },
+        {
+          "id": "CVE-2026-92391",
+          "cvss": 7.5,
+          "severity": "HIGH",
+          "epss": 0.01166,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-92391",
+            "USN-8932-1"
+          ]
+        },
+        {
+          "id": "CVE-2026-94266",
+          "cvss": 7.5,
+          "severity": "HIGH",
+          "epss": 0.00556,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-94266",
+            "USN-8932-1"
           ]
         },
         {
@@ -1729,7 +1833,7 @@
           "id": "CVE-2026-102473",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.0013,
+          "epss": 0.00102,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-102473"
@@ -1739,7 +1843,7 @@
           "id": "CVE-2026-102474",
           "cvss": 4.0,
           "severity": "MEDIUM",
-          "epss": 0.00144,
+          "epss": 0.00113,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-102474"
@@ -1885,7 +1989,7 @@
           "id": "CVE-2025-6297",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.0041,
+          "epss": 0.00478,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-6297"
@@ -1945,7 +2049,7 @@
           "id": "CVE-2026-27205",
           "cvss": 4.3,
           "severity": "LOW",
-          "epss": 0.00432,
+          "epss": 0.004,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-68rp-wp8r-4726",
@@ -1993,13 +2097,13 @@
       "purl": "pkg:deb/ubuntu/gcc-9@9.4.0-1ubuntu1~20.04.2?arch=arm64&distro=ubuntu-20.04",
       "name": "gcc-9",
       "version": "9.4.0-1ubuntu1~20.04.2",
-      "uniqueVulnCount": 4,
+      "uniqueVulnCount": 8,
       "vulnerabilities": [
         {
           "id": "CVE-2020-23026",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.0104,
+          "epss": 0.01074,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2020-23026"
@@ -2019,17 +2123,57 @@
           "id": "CVE-2026-102010",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.0025,
+          "epss": 0.0034,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-102010"
           ]
         },
         {
+          "id": "CVE-2026-114690",
+          "cvss": 6.2,
+          "severity": "MEDIUM",
+          "epss": 0.00107,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-114690"
+          ]
+        },
+        {
+          "id": "CVE-2026-114691",
+          "cvss": 5.9,
+          "severity": "MEDIUM",
+          "epss": 0.00395,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-114691"
+          ]
+        },
+        {
+          "id": "CVE-2026-115455",
+          "cvss": 6.5,
+          "severity": "MEDIUM",
+          "epss": 0.00303,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-115455"
+          ]
+        },
+        {
+          "id": "CVE-2026-115456",
+          "cvss": 3.7,
+          "severity": "LOW",
+          "epss": 0.00221,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-115456"
+          ]
+        },
+        {
           "id": "CVE-2026-95619",
           "cvss": 7.7,
           "severity": "HIGH",
-          "epss": 0.00363,
+          "epss": 0.00444,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-95619"
@@ -2268,7 +2412,7 @@
           "id": "CVE-2025-47291",
           "cvss": 7.5,
           "severity": "MODERATE",
-          "epss": 0.00278,
+          "epss": 0.0029,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-cxfp-7pvr-95ff",
@@ -2345,10 +2489,11 @@
           "id": "CVE-2026-95838",
           "cvss": 4.6,
           "severity": "MODERATE",
-          "epss": 0.00215,
+          "epss": 0.00223,
           "wildExploited": false,
           "sourceAdvisories": [
-            "GHSA-rp3h-jf77-q9p4"
+            "GHSA-rp3h-jf77-q9p4",
+            "GO-2026-6796"
           ]
         }
       ]
@@ -2433,7 +2578,7 @@
           "id": "CVE-2025-15558",
           "cvss": 8.0,
           "severity": "HIGH",
-          "epss": 0.0049,
+          "epss": 0.00549,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-p436-gjf2-799p",
@@ -2452,7 +2597,7 @@
           "id": "CVE-2025-15558",
           "cvss": 8.0,
           "severity": "HIGH",
-          "epss": 0.0049,
+          "epss": 0.00549,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-p436-gjf2-799p",
@@ -2485,7 +2630,7 @@
           "id": "CVE-2025-15558",
           "cvss": 8.0,
           "severity": "HIGH",
-          "epss": 0.0049,
+          "epss": 0.00549,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4610"
@@ -2514,7 +2659,7 @@
           "id": "CVE-2026-85747",
           "cvss": 6.8,
           "severity": "MODERATE",
-          "epss": 0.00209,
+          "epss": 0.00218,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-685w-q87j-wqw3"
@@ -2532,7 +2677,7 @@
           "id": "CVE-2026-33997",
           "cvss": 8.4,
           "severity": "MODERATE",
-          "epss": 0.00512,
+          "epss": 0.00402,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-pxq6-2prw-chj9",
@@ -2543,7 +2688,7 @@
           "id": "CVE-2026-34040",
           "cvss": 8.8,
           "severity": "HIGH",
-          "epss": 0.00163,
+          "epss": 0.0927,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4887"
@@ -2564,7 +2709,7 @@
           "id": "CVE-2026-41568",
           "cvss": 6.1,
           "severity": "MODERATE",
-          "epss": 0.00098,
+          "epss": 0.00108,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-vp62-88p7-qqf5",
@@ -2575,7 +2720,7 @@
           "id": "CVE-2026-42306",
           "cvss": 7.2,
           "severity": "HIGH",
-          "epss": 0.001,
+          "epss": 0.00104,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-rg2x-37c3-w2rh",
@@ -2594,7 +2739,7 @@
           "id": "CVE-2026-33997",
           "cvss": 8.4,
           "severity": "MODERATE",
-          "epss": 0.00512,
+          "epss": 0.00402,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-pxq6-2prw-chj9",
@@ -2605,7 +2750,7 @@
           "id": "CVE-2026-34040",
           "cvss": 8.8,
           "severity": "HIGH",
-          "epss": 0.00163,
+          "epss": 0.0927,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4887"
@@ -2626,7 +2771,7 @@
           "id": "CVE-2026-41568",
           "cvss": 6.1,
           "severity": "MODERATE",
-          "epss": 0.00098,
+          "epss": 0.00108,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-vp62-88p7-qqf5",
@@ -2637,7 +2782,7 @@
           "id": "CVE-2026-42306",
           "cvss": 7.2,
           "severity": "HIGH",
-          "epss": 0.001,
+          "epss": 0.00104,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-rg2x-37c3-w2rh",
@@ -2768,7 +2913,7 @@
           "id": "CVE-2025-11065",
           "cvss": 5.3,
           "severity": "MODERATE",
-          "epss": 0.00407,
+          "epss": 0.00434,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-2464-8j7c-4cjm",
@@ -2994,9 +3139,10 @@
           "id": "CVE-2026-63209",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00365,
+          "epss": 0.00572,
           "wildExploited": false,
           "sourceAdvisories": [
+            "GHSA-259r-337f-4rfw",
             "GO-2026-5841"
           ]
         }
@@ -3075,7 +3221,7 @@
           "id": "CVE-2026-33747",
           "cvss": 9.8,
           "severity": "HIGH",
-          "epss": 0.00583,
+          "epss": 0.00507,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-4c29-8rgm-jvjj",
@@ -3086,7 +3232,7 @@
           "id": "CVE-2026-33748",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.0053,
+          "epss": 0.00481,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-4vrq-3vrq-g6gg",
@@ -3167,7 +3313,7 @@
           "id": "CVE-2026-35469",
           "cvss": 8.7,
           "severity": "HIGH",
-          "epss": 0.00787,
+          "epss": 0.00656,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-pc3f-x583-g7j2",
@@ -3228,10 +3374,11 @@
           "id": "CVE-2026-61801",
           "cvss": 5.5,
           "severity": "MODERATE",
-          "epss": 0.00113,
+          "epss": 0.00117,
           "wildExploited": false,
           "sourceAdvisories": [
-            "GHSA-mjcv-p78q-w5fw"
+            "GHSA-mjcv-p78q-w5fw",
+            "GO-2026-6686"
           ]
         }
       ]
@@ -3534,7 +3681,7 @@
       "purl": "pkg:deb/ubuntu/glib-networking@2.64.2-1ubuntu0.1?arch=arm64&distro=ubuntu-20.04",
       "name": "glib-networking",
       "version": "2.64.2-1ubuntu0.1",
-      "uniqueVulnCount": 1,
+      "uniqueVulnCount": 2,
       "vulnerabilities": [
         {
           "id": "CVE-2026-10028",
@@ -3544,6 +3691,16 @@
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-10028"
+          ]
+        },
+        {
+          "id": "CVE-2026-103963",
+          "cvss": 7.5,
+          "severity": "HIGH",
+          "epss": 0.00339,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-103963"
           ]
         }
       ]
@@ -3636,7 +3793,7 @@
       "purl": "pkg:golang/go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v1.31.0",
       "name": "otlpmetrichttp",
       "version": "v1.31.0",
-      "uniqueVulnCount": 2,
+      "uniqueVulnCount": 1,
       "vulnerabilities": [
         {
           "id": "CVE-2026-39882",
@@ -3647,16 +3804,6 @@
           "sourceAdvisories": [
             "GHSA-w8rr-5gcm-pp58",
             "GO-2026-4985"
-          ]
-        },
-        {
-          "id": "CVE-2026-44967",
-          "cvss": 5.3,
-          "severity": "MODERATE",
-          "epss": 0.00296,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "GHSA-w8rr-5gcm-pp58"
           ]
         }
       ]
@@ -3671,7 +3818,7 @@
           "id": "CVE-2026-81870",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00195,
+          "epss": 0.00266,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-8wmf-6v46-5gfg",
@@ -3690,7 +3837,7 @@
           "id": "CVE-2026-81870",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00195,
+          "epss": 0.00266,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-8wmf-6v46-5gfg",
@@ -3703,7 +3850,7 @@
       "purl": "pkg:golang/go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v1.31.0",
       "name": "otlptracehttp",
       "version": "v1.31.0",
-      "uniqueVulnCount": 3,
+      "uniqueVulnCount": 2,
       "vulnerabilities": [
         {
           "id": "CVE-2026-39882",
@@ -3717,20 +3864,10 @@
           ]
         },
         {
-          "id": "CVE-2026-44967",
-          "cvss": 5.3,
-          "severity": "MODERATE",
-          "epss": 0.00296,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "GHSA-w8rr-5gcm-pp58"
-          ]
-        },
-        {
           "id": "CVE-2026-81870",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00195,
+          "epss": 0.00266,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-8wmf-6v46-5gfg",
@@ -3763,7 +3900,7 @@
           "id": "CVE-2026-24051",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.00179,
+          "epss": 0.00176,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-9h8m-3fm2-qjrq",
@@ -3774,7 +3911,7 @@
           "id": "CVE-2026-39883",
           "cvss": 8.8,
           "severity": "HIGH",
-          "epss": 0.00207,
+          "epss": 0.00252,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-hfvc-g4fc-pqhx",
@@ -3796,7 +3933,7 @@
           "id": "CVE-2026-81870",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00195,
+          "epss": 0.00266,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-8wmf-6v46-5gfg",
@@ -3815,7 +3952,7 @@
           "id": "CVE-2026-24051",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.00179,
+          "epss": 0.00176,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-9h8m-3fm2-qjrq",
@@ -3826,7 +3963,7 @@
           "id": "CVE-2026-39883",
           "cvss": 8.8,
           "severity": "HIGH",
-          "epss": 0.00207,
+          "epss": 0.00252,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-hfvc-g4fc-pqhx",
@@ -3837,7 +3974,7 @@
           "id": "CVE-2026-81870",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00195,
+          "epss": 0.00266,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-8wmf-6v46-5gfg",
@@ -3908,7 +4045,7 @@
           "id": "CVE-2025-47914",
           "cvss": 5.3,
           "severity": "MODERATE",
-          "epss": 0.0051,
+          "epss": 0.00546,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-f6x5-jh6r-wrfv",
@@ -3919,7 +4056,7 @@
           "id": "CVE-2025-58181",
           "cvss": 5.3,
           "severity": "MODERATE",
-          "epss": 0.00561,
+          "epss": 0.00597,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-j5w8-q4qc-rx2x",
@@ -3930,7 +4067,7 @@
           "id": "CVE-2026-39827",
           "cvss": 6.5,
           "severity": "MODERATE",
-          "epss": 0.00281,
+          "epss": 0.00279,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-qpw4-5x99-6vjp",
@@ -3941,7 +4078,7 @@
           "id": "CVE-2026-39828",
           "cvss": 8.8,
           "severity": "MODERATE",
-          "epss": 0.00539,
+          "epss": 0.00369,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-45gg-vh54-h5m9",
@@ -3952,7 +4089,7 @@
           "id": "CVE-2026-39829",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00623,
+          "epss": 0.00467,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-w879-237q-wc7r",
@@ -3963,7 +4100,7 @@
           "id": "CVE-2026-39830",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00621,
+          "epss": 0.00683,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-vgwf-h737-ff37",
@@ -3974,7 +4111,7 @@
           "id": "CVE-2026-39831",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00487,
+          "epss": 0.00478,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-89gr-r52h-f8rx",
@@ -3985,7 +4122,7 @@
           "id": "CVE-2026-39832",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00716,
+          "epss": 0.00683,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-f5wc-c3c7-36mc",
@@ -3996,7 +4133,7 @@
           "id": "CVE-2026-39833",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00487,
+          "epss": 0.00469,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-jppx-rxg9-jmrx",
@@ -4007,7 +4144,7 @@
           "id": "CVE-2026-39834",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00637,
+          "epss": 0.00597,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-rm3j-f69w-wqmq",
@@ -4029,7 +4166,7 @@
           "id": "CVE-2026-42508",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00654,
+          "epss": 0.0691,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-5cgq-3rg8-m6cv",
@@ -4040,7 +4177,7 @@
           "id": "CVE-2026-46595",
           "cvss": 10.0,
           "severity": "CRITICAL",
-          "epss": 0.00503,
+          "epss": 0.00556,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-x527-x647-q7gg",
@@ -4051,7 +4188,7 @@
           "id": "CVE-2026-46597",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.0062,
+          "epss": 0.00473,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-q4h4-gmj2-qvw2",
@@ -4062,7 +4199,7 @@
           "id": "CVE-2026-46598",
           "cvss": 5.3,
           "severity": "MODERATE",
-          "epss": 0.00515,
+          "epss": 0.00412,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-9m57-25v3-79x9",
@@ -4120,13 +4257,13 @@
       "purl": "pkg:golang/golang.org/x/net@v0.39.0",
       "name": "net",
       "version": "v0.39.0",
-      "uniqueVulnCount": 15,
+      "uniqueVulnCount": 17,
       "vulnerabilities": [
         {
           "id": "CVE-2025-47911",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.0057,
+          "epss": 0.00561,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4440"
@@ -4136,7 +4273,7 @@
           "id": "CVE-2025-58190",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00548,
+          "epss": 0.0054,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4441"
@@ -4146,7 +4283,7 @@
           "id": "CVE-2026-25680",
           "cvss": 6.5,
           "severity": "MODERATE",
-          "epss": 0.0046,
+          "epss": 0.00326,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-5cv4-jp36-h3mw",
@@ -4177,7 +4314,7 @@
           "id": "CVE-2026-33814",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00781,
+          "epss": 0.0084,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4918"
@@ -4187,7 +4324,7 @@
           "id": "CVE-2026-39821",
           "cvss": 9.6,
           "severity": "CRITICAL",
-          "epss": 0.00692,
+          "epss": 0.01834,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-5026"
@@ -4207,7 +4344,7 @@
           "id": "CVE-2026-42506",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00333,
+          "epss": 0.00235,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-5025"
@@ -4227,7 +4364,7 @@
           "id": "CVE-2026-78659",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.0057,
+          "epss": 0.00627,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6603"
@@ -4237,17 +4374,27 @@
           "id": "CVE-2026-78660",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00303,
+          "epss": 0.00425,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6610"
           ]
         },
         {
+          "id": "CVE-2026-78661",
+          "cvss": 0.0,
+          "severity": "NONE",
+          "epss": 0.00185,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GO-2026-6860"
+          ]
+        },
+        {
           "id": "CVE-2026-78663",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00574,
+          "epss": 0.00622,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6612"
@@ -4257,7 +4404,7 @@
           "id": "CVE-2026-78669",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00568,
+          "epss": 0.00614,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6611"
@@ -4267,10 +4414,20 @@
           "id": "CVE-2026-97032",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00181,
+          "epss": 0.0049,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6617"
+          ]
+        },
+        {
+          "id": "CVE-2026-97045",
+          "cvss": 0.0,
+          "severity": "NONE",
+          "epss": 0.00202,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GO-2026-6866"
           ]
         }
       ]
@@ -4330,7 +4487,7 @@
           "id": "CVE-2026-39824",
           "cvss": 3.3,
           "severity": "LOW",
-          "epss": 0.00158,
+          "epss": 0.00114,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-5024"
@@ -4355,7 +4512,7 @@
           "id": "CVE-2026-56851",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00335,
+          "epss": 0.00466,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6629"
@@ -4418,7 +4575,7 @@
           "id": "CVE-2026-33186",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.01625,
+          "epss": 0.01584,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-p77j-4mvh-x3m3",
@@ -4480,7 +4637,7 @@
           "id": "CVE-2026-33186",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.01625,
+          "epss": 0.01584,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-p77j-4mvh-x3m3",
@@ -4702,7 +4859,7 @@
           "id": "CVE-2026-45409",
           "cvss": 6.9,
           "severity": "MODERATE",
-          "epss": 0.00457,
+          "epss": 0.00408,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-65pc-fj4g-8rjx",
@@ -4732,7 +4889,7 @@
           "id": "CVE-2026-45409",
           "cvss": 6.9,
           "severity": "MODERATE",
-          "epss": 0.00457,
+          "epss": 0.00408,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-65pc-fj4g-8rjx",
@@ -5003,7 +5160,7 @@
           "id": "CVE-2026-4878",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.00141,
+          "epss": 0.00201,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4878",
@@ -5207,7 +5364,7 @@
           "id": "CVE-2026-41989",
           "cvss": 6.7,
           "severity": "MEDIUM",
-          "epss": 0.00192,
+          "epss": 0.00182,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-41989"
@@ -5876,7 +6033,7 @@
           "id": "CVE-2021-46848",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.02262,
+          "epss": 0.02823,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2021-46848"
@@ -5886,7 +6043,7 @@
           "id": "CVE-2025-13151",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.01175,
+          "epss": 0.0137,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-13151"
@@ -5955,7 +6112,7 @@
       "purl": "pkg:deb/ubuntu/libxml2@2.9.10%2Bdfsg-5ubuntu0.20.04.10?arch=arm64&distro=ubuntu-20.04",
       "name": "libxml2",
       "version": "2.9.10%2Bdfsg-5ubuntu0.20.04.10",
-      "uniqueVulnCount": 21,
+      "uniqueVulnCount": 20,
       "vulnerabilities": [
         {
           "id": "CVE-2025-26434",
@@ -6026,7 +6183,7 @@
           "id": "CVE-2025-8732",
           "cvss": 4.8,
           "severity": "MEDIUM",
-          "epss": 0.00216,
+          "epss": 0.00236,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-8732"
@@ -6036,7 +6193,7 @@
           "id": "CVE-2025-9714",
           "cvss": 6.2,
           "severity": "MEDIUM",
-          "epss": 0.00158,
+          "epss": 0.00159,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-9714",
@@ -6087,7 +6244,7 @@
           "id": "CVE-2026-74860",
           "cvss": 8.5,
           "severity": "HIGH",
-          "epss": 0.00447,
+          "epss": 0.00658,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-74860",
@@ -6098,7 +6255,7 @@
           "id": "CVE-2026-76781",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00167,
+          "epss": 0.00157,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-76781",
@@ -6113,16 +6270,6 @@
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-86138",
-            "USN-8910-1"
-          ]
-        },
-        {
-          "id": "CVE-2026-86139",
-          "cvss": 7.8,
-          "severity": "HIGH",
-          "epss": 0.00166,
-          "wildExploited": false,
-          "sourceAdvisories": [
             "USN-8910-1"
           ]
         },
@@ -6317,33 +6464,13 @@
       "purl": "pkg:deb/ubuntu/openssl@1.1.1f-1ubuntu2.24?arch=arm64&distro=ubuntu-20.04",
       "name": "openssl",
       "version": "1.1.1f-1ubuntu2.24",
-      "uniqueVulnCount": 31,
+      "uniqueVulnCount": 27,
       "vulnerabilities": [
-        {
-          "id": "CVE-2024-2511",
-          "cvss": 5.9,
-          "severity": "MEDIUM",
-          "epss": 0.52421,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-8678-2"
-          ]
-        },
-        {
-          "id": "CVE-2024-5535",
-          "cvss": 9.1,
-          "severity": "CRITICAL",
-          "epss": 0.05582,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-8678-2"
-          ]
-        },
         {
           "id": "CVE-2025-68160",
           "cvss": 4.7,
           "severity": "MEDIUM",
-          "epss": 0.00178,
+          "epss": 0.00189,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-68160"
@@ -6353,7 +6480,7 @@
           "id": "CVE-2025-69418",
           "cvss": 4.0,
           "severity": "MEDIUM",
-          "epss": 0.00129,
+          "epss": 0.00132,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69418"
@@ -6363,7 +6490,7 @@
           "id": "CVE-2025-69419",
           "cvss": 7.4,
           "severity": "HIGH",
-          "epss": 0.00616,
+          "epss": 0.00607,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69419"
@@ -6373,7 +6500,7 @@
           "id": "CVE-2025-69420",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00899,
+          "epss": 0.0092,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69420"
@@ -6383,7 +6510,7 @@
           "id": "CVE-2025-69421",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00958,
+          "epss": 0.00944,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69421"
@@ -6401,30 +6528,10 @@
           ]
         },
         {
-          "id": "CVE-2025-9231",
-          "cvss": 6.5,
-          "severity": "MEDIUM",
-          "epss": 0.02242,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-7786-1"
-          ]
-        },
-        {
-          "id": "CVE-2025-9232",
-          "cvss": 5.9,
-          "severity": "MEDIUM",
-          "epss": 0.02001,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-7786-1"
-          ]
-        },
-        {
           "id": "CVE-2026-22795",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00169,
+          "epss": 0.00179,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-22795"
@@ -6434,7 +6541,7 @@
           "id": "CVE-2026-22796",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00576,
+          "epss": 0.00589,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-22796"
@@ -6494,7 +6601,7 @@
           "id": "CVE-2026-35189",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00267,
+          "epss": 0.00317,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-35189",
@@ -6525,7 +6632,7 @@
           "id": "CVE-2026-54872",
           "cvss": 3.7,
           "severity": "LOW",
-          "epss": 0.00263,
+          "epss": 0.00444,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-54872",
@@ -6568,7 +6675,7 @@
           "id": "CVE-2026-75806",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00387,
+          "epss": 0.01104,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-75806"
@@ -6578,7 +6685,7 @@
           "id": "CVE-2026-77696",
           "cvss": 3.7,
           "severity": "LOW",
-          "epss": 0.00243,
+          "epss": 0.00396,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-77696",
@@ -6589,7 +6696,7 @@
           "id": "CVE-2026-84782",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.0039,
+          "epss": 0.00831,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-84782",
@@ -6706,7 +6813,7 @@
       "purl": "pkg:deb/ubuntu/patch@2.7.6-6?arch=arm64&distro=ubuntu-20.04",
       "name": "patch",
       "version": "2.7.6-6",
-      "uniqueVulnCount": 5,
+      "uniqueVulnCount": 6,
       "vulnerabilities": [
         {
           "id": "CVE-2018-6952",
@@ -6722,7 +6829,7 @@
           "id": "CVE-2019-20633",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.01023,
+          "epss": 0.01019,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2019-20633"
@@ -6736,6 +6843,16 @@
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2021-45261"
+          ]
+        },
+        {
+          "id": "CVE-2026-115207",
+          "cvss": 5.5,
+          "severity": "MEDIUM",
+          "epss": 0.00139,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-115207"
           ]
         },
         {
@@ -6820,7 +6937,7 @@
           "id": "CVE-2025-40909",
           "cvss": 5.9,
           "severity": "MEDIUM",
-          "epss": 0.00504,
+          "epss": 0.00499,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-40909"
@@ -6830,7 +6947,7 @@
           "id": "CVE-2026-12087",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00374,
+          "epss": 0.00574,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-12087",
@@ -6841,7 +6958,7 @@
           "id": "CVE-2026-13221",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00432,
+          "epss": 0.00494,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-13221",
@@ -6852,7 +6969,7 @@
           "id": "CVE-2026-15534",
           "cvss": 5.7,
           "severity": "MEDIUM",
-          "epss": 0.00256,
+          "epss": 0.00164,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-15534",
@@ -6874,7 +6991,7 @@
           "id": "CVE-2026-4176",
           "cvss": 9.8,
           "severity": "CRITICAL",
-          "epss": 0.00793,
+          "epss": 0.00622,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4176"
@@ -6884,7 +7001,7 @@
           "id": "CVE-2026-42496",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.0043,
+          "epss": 0.00502,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-42496",
@@ -6895,7 +7012,7 @@
           "id": "CVE-2026-42497",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.0043,
+          "epss": 0.00502,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-42497"
@@ -6905,7 +7022,7 @@
           "id": "CVE-2026-48959",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00609,
+          "epss": 0.00553,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-48959"
@@ -6915,7 +7032,7 @@
           "id": "CVE-2026-48961",
           "cvss": 7.3,
           "severity": "HIGH",
-          "epss": 0.00407,
+          "epss": 0.00262,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-48961"
@@ -6925,7 +7042,7 @@
           "id": "CVE-2026-48962",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00495,
+          "epss": 0.00439,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-48962"
@@ -6946,7 +7063,7 @@
           "id": "CVE-2026-57433",
           "cvss": 9.8,
           "severity": "CRITICAL",
-          "epss": 0.00357,
+          "epss": 0.00475,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-57433",
@@ -6957,7 +7074,7 @@
           "id": "CVE-2026-7017",
           "cvss": 7.1,
           "severity": "HIGH",
-          "epss": 0.00247,
+          "epss": 0.00349,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-7017"
@@ -6977,7 +7094,7 @@
           "id": "CVE-2026-8376",
           "cvss": 9.8,
           "severity": "CRITICAL",
-          "epss": 0.00481,
+          "epss": 0.00486,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-8376",
@@ -6988,7 +7105,7 @@
           "id": "CVE-2026-9538",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00448,
+          "epss": 0.00517,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-9538"
@@ -7038,7 +7155,7 @@
           "id": "CVE-2023-5752",
           "cvss": 5.5,
           "severity": "MODERATE",
-          "epss": 0.00476,
+          "epss": 0.00502,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-mq26-g339-26xf",
@@ -7071,7 +7188,7 @@
           "id": "CVE-2026-1703",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00443,
+          "epss": 0.00436,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-6vgw-5pg2-w6jp",
@@ -7082,7 +7199,7 @@
           "id": "CVE-2026-3219",
           "cvss": 4.6,
           "severity": "MODERATE",
-          "epss": 0.0018,
+          "epss": 0.00144,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-58qw-9mgm-455v",
@@ -7093,7 +7210,7 @@
           "id": "CVE-2026-6357",
           "cvss": 5.3,
           "severity": "MODERATE",
-          "epss": 0.00171,
+          "epss": 0.00138,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-jp4c-xjxw-mgf9",
@@ -7104,7 +7221,7 @@
           "id": "CVE-2026-8643",
           "cvss": 8.0,
           "severity": "MODERATE",
-          "epss": 0.00466,
+          "epss": 0.0032,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-wf93-45jw-7689",
@@ -7143,7 +7260,7 @@
           "id": "CVE-2026-4897",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00151,
+          "epss": 0.00156,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4897"
@@ -7151,9 +7268,9 @@
         },
         {
           "id": "CVE-2026-85498",
-          "cvss": null,
-          "severity": null,
-          "epss": null,
+          "cvss": 3.5,
+          "severity": "LOW",
+          "epss": 0.00262,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-85498"
@@ -7389,7 +7506,7 @@
       "purl": "pkg:deb/ubuntu/python3.8@3.8.10-0ubuntu1~20.04.18?arch=arm64&distro=ubuntu-20.04",
       "name": "python3.8",
       "version": "3.8.10-0ubuntu1~20.04.18",
-      "uniqueVulnCount": 59,
+      "uniqueVulnCount": 60,
       "vulnerabilities": [
         {
           "id": "CVE-2007-4559",
@@ -7425,7 +7542,7 @@
           "id": "CVE-2025-11468",
           "cvss": 5.7,
           "severity": "MEDIUM",
-          "epss": 0.00625,
+          "epss": 0.00616,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-11468"
@@ -7445,7 +7562,7 @@
           "id": "CVE-2025-12781",
           "cvss": 6.3,
           "severity": "MEDIUM",
-          "epss": 0.00569,
+          "epss": 0.00859,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-12781"
@@ -7455,7 +7572,7 @@
           "id": "CVE-2025-13462",
           "cvss": 3.3,
           "severity": "LOW",
-          "epss": 0.00167,
+          "epss": 0.00171,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-13462"
@@ -7465,7 +7582,7 @@
           "id": "CVE-2025-13836",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.01631,
+          "epss": 0.01748,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-13836",
@@ -7476,7 +7593,7 @@
           "id": "CVE-2025-13837",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00223,
+          "epss": 0.00239,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-13837"
@@ -7486,7 +7603,7 @@
           "id": "CVE-2025-15282",
           "cvss": 6.0,
           "severity": "MEDIUM",
-          "epss": 0.00545,
+          "epss": 0.00537,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-15282"
@@ -7496,7 +7613,7 @@
           "id": "CVE-2025-15366",
           "cvss": 5.9,
           "severity": "MEDIUM",
-          "epss": 0.00422,
+          "epss": 0.00431,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-15366"
@@ -7506,7 +7623,7 @@
           "id": "CVE-2025-15367",
           "cvss": 5.9,
           "severity": "MEDIUM",
-          "epss": 0.00369,
+          "epss": 0.00377,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-15367"
@@ -7538,7 +7655,7 @@
           "id": "CVE-2025-6069",
           "cvss": 4.3,
           "severity": "MEDIUM",
-          "epss": 0.00589,
+          "epss": 0.00603,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-6069",
@@ -7560,7 +7677,7 @@
           "id": "CVE-2025-69534",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.00589,
+          "epss": 0.00663,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-69534"
@@ -7570,7 +7687,7 @@
           "id": "CVE-2025-8194",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00667,
+          "epss": 0.00761,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-8194",
@@ -7592,7 +7709,7 @@
           "id": "CVE-2026-0672",
           "cvss": 6.0,
           "severity": "MEDIUM",
-          "epss": 0.00469,
+          "epss": 0.0048,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-0672"
@@ -7612,10 +7729,30 @@
           "id": "CVE-2026-0865",
           "cvss": 5.9,
           "severity": "MEDIUM",
-          "epss": 0.00542,
+          "epss": 0.00554,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-0865"
+          ]
+        },
+        {
+          "id": "CVE-2026-114583",
+          "cvss": 6.9,
+          "severity": "MEDIUM",
+          "epss": 0.00227,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-114583"
+          ]
+        },
+        {
+          "id": "CVE-2026-115557",
+          "cvss": 9.4,
+          "severity": "CRITICAL",
+          "epss": 0.00534,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "UBUNTU-CVE-2026-115557"
           ]
         },
         {
@@ -7642,7 +7779,7 @@
           "id": "CVE-2026-12345",
           "cvss": 5.9,
           "severity": "MEDIUM",
-          "epss": 0.0018,
+          "epss": 0.00344,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-12345"
@@ -7652,7 +7789,7 @@
           "id": "CVE-2026-1299",
           "cvss": 6.0,
           "severity": "MEDIUM",
-          "epss": 0.00582,
+          "epss": 0.00573,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-1299"
@@ -7723,7 +7860,7 @@
           "id": "CVE-2026-19445",
           "cvss": 9.2,
           "severity": "CRITICAL",
-          "epss": 0.00429,
+          "epss": 0.00524,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-19445"
@@ -7733,7 +7870,7 @@
           "id": "CVE-2026-19553",
           "cvss": 7.6,
           "severity": "HIGH",
-          "epss": 0.00401,
+          "epss": 0.00547,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-19553"
@@ -7753,7 +7890,7 @@
           "id": "CVE-2026-2297",
           "cvss": 5.7,
           "severity": "MEDIUM",
-          "epss": 0.00201,
+          "epss": 0.0022,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-2297"
@@ -7773,7 +7910,7 @@
           "id": "CVE-2026-3446",
           "cvss": 6.0,
           "severity": "MEDIUM",
-          "epss": 0.00225,
+          "epss": 0.00188,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-3446"
@@ -7783,7 +7920,7 @@
           "id": "CVE-2026-3644",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00497,
+          "epss": 0.00508,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-3644",
@@ -7794,7 +7931,7 @@
           "id": "CVE-2026-4224",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00702,
+          "epss": 0.00717,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4224",
@@ -7802,20 +7939,10 @@
           ]
         },
         {
-          "id": "CVE-2026-4360",
-          "cvss": 5.3,
-          "severity": "MEDIUM",
-          "epss": 0.00481,
-          "wildExploited": false,
-          "sourceAdvisories": [
-            "USN-8744-1"
-          ]
-        },
-        {
           "id": "CVE-2026-4519",
           "cvss": 7.1,
           "severity": "HIGH",
-          "epss": 0.00391,
+          "epss": 0.00314,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4519"
@@ -7825,7 +7952,7 @@
           "id": "CVE-2026-4786",
           "cvss": 7.1,
           "severity": "HIGH",
-          "epss": 0.00485,
+          "epss": 0.0029,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-4786"
@@ -7896,7 +8023,7 @@
           "id": "CVE-2026-6100",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00761,
+          "epss": 0.00579,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-6100"
@@ -7906,7 +8033,7 @@
           "id": "CVE-2026-6879",
           "cvss": 2.0,
           "severity": "LOW",
-          "epss": 0.00369,
+          "epss": 0.00355,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-6879"
@@ -7956,7 +8083,7 @@
           "id": "CVE-2026-87910",
           "cvss": 5.7,
           "severity": "MEDIUM",
-          "epss": 0.005,
+          "epss": 0.00609,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-87910"
@@ -8021,7 +8148,7 @@
           "id": "CVE-2018-18074",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.07443,
+          "epss": 0.06925,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-x84v-xcm2-53pg",
@@ -8065,7 +8192,7 @@
           "id": "CVE-2026-25645",
           "cvss": 5.5,
           "severity": "MODERATE",
-          "epss": 0.00185,
+          "epss": 0.00189,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-gc5v-m9x4-r6x2",
@@ -8117,7 +8244,7 @@
           "id": "CVE-2026-25645",
           "cvss": 5.5,
           "severity": "MODERATE",
-          "epss": 0.00185,
+          "epss": 0.00189,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-gc5v-m9x4-r6x2",
@@ -8143,7 +8270,7 @@
           "id": "CVE-2026-5958",
           "cvss": 2.1,
           "severity": "LOW",
-          "epss": 0.00137,
+          "epss": 0.00142,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-5958",
@@ -8163,13 +8290,13 @@
       "purl": "pkg:pypi/setuptools@45.2.0",
       "name": "setuptools",
       "version": "45.2.0",
-      "uniqueVulnCount": 4,
+      "uniqueVulnCount": 5,
       "vulnerabilities": [
         {
           "id": "CVE-2022-40897",
           "cvss": 5.9,
           "severity": "HIGH",
-          "epss": 0.02503,
+          "epss": 0.02632,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-r9hx-vwmv-q579",
@@ -8208,6 +8335,14 @@
             "GHSA-h35f-9h28-mq5c",
             "PYSEC-2026-3447"
           ]
+        },
+        {
+          "id": "GHSA-xmj3-9gf7-h52w",
+          "cvss": null,
+          "severity": "LOW",
+          "epss": null,
+          "wildExploited": false,
+          "sourceAdvisories": []
         }
       ]
     },
@@ -8257,13 +8392,13 @@
       "purl": "pkg:golang/stdlib@1.23.8",
       "name": "stdlib",
       "version": "1.23.8",
-      "uniqueVulnCount": 63,
+      "uniqueVulnCount": 64,
       "vulnerabilities": [
         {
           "id": "CVE-2025-0913",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00322,
+          "epss": 0.00325,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2025-3750"
@@ -8273,7 +8408,7 @@
           "id": "CVE-2025-22873",
           "cvss": 3.8,
           "severity": "LOW",
-          "epss": 0.00236,
+          "epss": 0.00233,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4403"
@@ -8303,7 +8438,7 @@
           "id": "CVE-2025-47907",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.00383,
+          "epss": 0.00406,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2025-3849"
@@ -8413,7 +8548,7 @@
           "id": "CVE-2025-61726",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.02326,
+          "epss": 0.02292,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4341"
@@ -8433,7 +8568,7 @@
           "id": "CVE-2025-61728",
           "cvss": 6.5,
           "severity": "MEDIUM",
-          "epss": 0.00749,
+          "epss": 0.00738,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4342"
@@ -8443,7 +8578,7 @@
           "id": "CVE-2025-61729",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00457,
+          "epss": 0.0049,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2025-4155"
@@ -8453,7 +8588,7 @@
           "id": "CVE-2025-61730",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00329,
+          "epss": 0.00324,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4340"
@@ -8463,17 +8598,27 @@
           "id": "CVE-2025-68121",
           "cvss": 10.0,
           "severity": "CRITICAL",
-          "epss": 0.00915,
+          "epss": 0.00902,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4337"
           ]
         },
         {
+          "id": "CVE-2026-111943",
+          "cvss": 6.8,
+          "severity": "MEDIUM",
+          "epss": 0.00396,
+          "wildExploited": false,
+          "sourceAdvisories": [
+            "GO-2026-6809"
+          ]
+        },
+        {
           "id": "CVE-2026-25679",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00834,
+          "epss": 0.00827,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4601"
@@ -8483,7 +8628,7 @@
           "id": "CVE-2026-27139",
           "cvss": 2.5,
           "severity": "LOW",
-          "epss": 0.00118,
+          "epss": 0.00219,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4602"
@@ -8493,7 +8638,7 @@
           "id": "CVE-2026-27142",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00346,
+          "epss": 0.00374,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4603"
@@ -8553,7 +8698,7 @@
           "id": "CVE-2026-32288",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00182,
+          "epss": 0.0029,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4869"
@@ -8573,7 +8718,7 @@
           "id": "CVE-2026-33811",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00813,
+          "epss": 0.00875,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4981"
@@ -8583,7 +8728,7 @@
           "id": "CVE-2026-33814",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00781,
+          "epss": 0.0084,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4918"
@@ -8613,7 +8758,7 @@
           "id": "CVE-2026-39821",
           "cvss": 9.6,
           "severity": "CRITICAL",
-          "epss": 0.00692,
+          "epss": 0.01834,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-5026"
@@ -8633,7 +8778,7 @@
           "id": "CVE-2026-39823",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00333,
+          "epss": 0.00374,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4982"
@@ -8643,7 +8788,7 @@
           "id": "CVE-2026-39825",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00413,
+          "epss": 0.0039,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4976"
@@ -8653,7 +8798,7 @@
           "id": "CVE-2026-39826",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00393,
+          "epss": 0.00371,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4980"
@@ -8663,7 +8808,7 @@
           "id": "CVE-2026-39836",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.0062,
+          "epss": 0.00633,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-4971"
@@ -8703,7 +8848,7 @@
           "id": "CVE-2026-42507",
           "cvss": 5.3,
           "severity": "MEDIUM",
-          "epss": 0.00412,
+          "epss": 0.0037,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-5039"
@@ -8723,7 +8868,7 @@
           "id": "CVE-2026-56857",
           "cvss": 9.8,
           "severity": "CRITICAL",
-          "epss": 0.00493,
+          "epss": 0.00553,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6604"
@@ -8773,7 +8918,7 @@
           "id": "CVE-2026-56866",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00309,
+          "epss": 0.00473,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6605"
@@ -8783,7 +8928,7 @@
           "id": "CVE-2026-78659",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.0057,
+          "epss": 0.00627,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6603"
@@ -8793,7 +8938,7 @@
           "id": "CVE-2026-78660",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00303,
+          "epss": 0.00425,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6610"
@@ -8803,7 +8948,7 @@
           "id": "CVE-2026-78663",
           "cvss": 9.1,
           "severity": "CRITICAL",
-          "epss": 0.00574,
+          "epss": 0.00622,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6612"
@@ -8813,7 +8958,7 @@
           "id": "CVE-2026-78667",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00379,
+          "epss": 0.0048,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6609"
@@ -8823,7 +8968,7 @@
           "id": "CVE-2026-78669",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00568,
+          "epss": 0.00614,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6611"
@@ -8833,7 +8978,7 @@
           "id": "CVE-2026-94439",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00315,
+          "epss": 0.00414,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6613"
@@ -8843,7 +8988,7 @@
           "id": "CVE-2026-94440",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00404,
+          "epss": 0.00511,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6608"
@@ -8853,7 +8998,7 @@
           "id": "CVE-2026-94448",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00181,
+          "epss": 0.00289,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6599"
@@ -8863,7 +9008,7 @@
           "id": "CVE-2026-97030",
           "cvss": 6.1,
           "severity": "MEDIUM",
-          "epss": 0.00181,
+          "epss": 0.00289,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6600"
@@ -8873,7 +9018,7 @@
           "id": "CVE-2026-97031",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00394,
+          "epss": 0.00519,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6607"
@@ -8883,7 +9028,7 @@
           "id": "CVE-2026-97032",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.00181,
+          "epss": 0.0049,
           "wildExploited": false,
           "sourceAdvisories": [
             "GO-2026-6617"
@@ -8931,7 +9076,7 @@
           "id": "CVE-2025-4598",
           "cvss": 4.7,
           "severity": "MEDIUM",
-          "epss": 0.01233,
+          "epss": 0.01277,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2025-4598",
@@ -8942,7 +9087,7 @@
           "id": "CVE-2026-29111",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00166,
+          "epss": 0.00126,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-29111"
@@ -8952,7 +9097,7 @@
           "id": "CVE-2026-40225",
           "cvss": 6.4,
           "severity": "MEDIUM",
-          "epss": 0.00208,
+          "epss": 0.00144,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-40225"
@@ -8962,7 +9107,7 @@
           "id": "CVE-2026-40226",
           "cvss": 6.4,
           "severity": "MEDIUM",
-          "epss": 0.00094,
+          "epss": 0.00072,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-40226"
@@ -8972,7 +9117,7 @@
           "id": "CVE-2026-40228",
           "cvss": 3.3,
           "severity": "LOW",
-          "epss": 0.00139,
+          "epss": 0.00173,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-40228"
@@ -9056,7 +9201,7 @@
           "id": "CVE-2026-5704",
           "cvss": 5.5,
           "severity": "MEDIUM",
-          "epss": 0.00401,
+          "epss": 0.0043,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-5704",
@@ -9126,7 +9271,7 @@
           "id": "CVE-2018-25091",
           "cvss": 6.1,
           "severity": "MODERATE",
-          "epss": 0.00516,
+          "epss": 0.00594,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-gwvm-45gx-3cf8",
@@ -9181,7 +9326,7 @@
           "id": "CVE-2023-45803",
           "cvss": 4.2,
           "severity": "MODERATE",
-          "epss": 0.00544,
+          "epss": 0.00593,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-g4mx-q9vg-27p4",
@@ -9236,7 +9381,7 @@
           "id": "CVE-2026-44431",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.00339,
+          "epss": 0.00331,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-qccp-gfcp-xxvc",
@@ -9299,7 +9444,7 @@
           "id": "CVE-2023-45803",
           "cvss": 4.2,
           "severity": "MODERATE",
-          "epss": 0.00544,
+          "epss": 0.00593,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-g4mx-q9vg-27p4",
@@ -9365,7 +9510,7 @@
           "id": "CVE-2026-44431",
           "cvss": 8.2,
           "severity": "HIGH",
-          "epss": 0.00339,
+          "epss": 0.00331,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-qccp-gfcp-xxvc",
@@ -9405,7 +9550,7 @@
           "id": "CVE-2026-13595",
           "cvss": 6.8,
           "severity": "MEDIUM",
-          "epss": 0.00168,
+          "epss": 0.00144,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-13595"
@@ -9415,7 +9560,7 @@
           "id": "CVE-2026-27456",
           "cvss": 4.7,
           "severity": "MEDIUM",
-          "epss": 0.00118,
+          "epss": 0.00157,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-27456"
@@ -9425,7 +9570,7 @@
           "id": "CVE-2026-53613",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.00128,
+          "epss": 0.00163,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-53613"
@@ -9455,7 +9600,7 @@
           "id": "CVE-2026-78408",
           "cvss": 7.9,
           "severity": "HIGH",
-          "epss": 0.00186,
+          "epss": 0.00193,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-78408"
@@ -9465,7 +9610,7 @@
           "id": "CVE-2026-78409",
           "cvss": 7.0,
           "severity": "HIGH",
-          "epss": 0.00154,
+          "epss": 0.00189,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-78409"
@@ -9475,7 +9620,7 @@
           "id": "CVE-2026-78410",
           "cvss": 7.8,
           "severity": "HIGH",
-          "epss": 0.00156,
+          "epss": 0.00162,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-78410"
@@ -9501,7 +9646,7 @@
           "id": "CVE-2025-66221",
           "cvss": 6.3,
           "severity": "MODERATE",
-          "epss": 0.00511,
+          "epss": 0.00547,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-hgf8-39gv-g3f2",
@@ -9512,7 +9657,7 @@
           "id": "CVE-2026-102598",
           "cvss": 6.3,
           "severity": "MODERATE",
-          "epss": 0.00368,
+          "epss": 0.0037,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-g6x2-hccm-hh4m",
@@ -9534,7 +9679,7 @@
           "id": "CVE-2026-27199",
           "cvss": 6.3,
           "severity": "MODERATE",
-          "epss": 0.00555,
+          "epss": 0.00631,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-29vq-49wr-vm6x",
@@ -9553,7 +9698,7 @@
           "id": "CVE-2022-40898",
           "cvss": 7.5,
           "severity": "HIGH",
-          "epss": 0.02735,
+          "epss": 0.02837,
           "wildExploited": false,
           "sourceAdvisories": [
             "GHSA-qwmp-2cf2-g9g6",
@@ -9573,18 +9718,26 @@
       "purl": "pkg:deb/ubuntu/xz-utils@5.2.4-1ubuntu1.1?arch=arm64&distro=ubuntu-20.04",
       "name": "xz-utils",
       "version": "5.2.4-1ubuntu1.1",
-      "uniqueVulnCount": 1,
+      "uniqueVulnCount": 2,
       "vulnerabilities": [
         {
           "id": "CVE-2026-34743",
           "cvss": 6.3,
           "severity": "MEDIUM",
-          "epss": 0.00514,
+          "epss": 0.00534,
           "wildExploited": false,
           "sourceAdvisories": [
             "UBUNTU-CVE-2026-34743",
             "USN-8362-1"
           ]
+        },
+        {
+          "id": "USN-8945-1",
+          "cvss": null,
+          "severity": null,
+          "epss": null,
+          "wildExploited": false,
+          "sourceAdvisories": []
         }
       ]
     },

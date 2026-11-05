@@ -33,3 +33,9 @@ results/.osv-details-cache.json
 
 # Claude Code project instructions (local only, not for the public repo)
 CLAUDE.md
+
+# Deck-analysis scripts and their outputs (talk collateral, not the demo repo).
+# Ad-hoc measurement tooling written for the NSSS slides: scripts, their frozen
+# JSON results, and the ubuntu.com HTTP caches they populate. The deck is built
+# from its own copies of these JSONs, so nothing here is an input to the repo.
+deck-analysis/
